@@ -1,7 +1,7 @@
 import csv
-#Ur_list = []
-#Fiz_list = []
-#Trash_list = []
+Ur_list = []
+Fiz_list = []
+Trash_list = []
 Ur_dictionary = {}
 Fiz_dictionary = {}
 Trash_dictionary = {}
@@ -17,9 +17,9 @@ def write_csv(data, name):
 
 
 with open('Корреспонденты.csv') as f:
-    Ur_list = []
-    Fiz_list = []
-    Trash_list = []
+    #Ur_list = []
+    #Fiz_list = []
+    #Trash_list = []
     reader = csv.DictReader(f)
     i=0
     for row in reader:
@@ -44,17 +44,17 @@ with open('Корреспонденты.csv') as f:
             #i+=1
             #if i>2:
             #    break
-        if i>400:
-            print('Ur_list = ')
-            print(Ur_list) 
-            write_csv(Ur_list, 'csv_write_Ur.csv')
-            print('Fiz_list = ')
-            print(Fiz_list)
-            write_csv(Fiz_list, 'csv_write_Fiz.csv')
-            print('Trash_list = ')
-            print(Trash_list)
-            write_csv(Trash_list, 'csv_write_Trash.csv')
-            break
+          ##if i>400:
+    print('Ur_list = ')
+    print(Ur_list) 
+    write_csv(Ur_list, 'csv_write_Ur.csv')
+    print('Fiz_list = ')
+    print(Fiz_list)
+    write_csv(Fiz_list, 'csv_write_Fiz.csv')
+    print('Trash_list = ')
+    print(Trash_list)
+    write_csv(Trash_list, 'csv_write_Trash.csv')
+            ##break
    
 
 
