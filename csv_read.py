@@ -7,6 +7,15 @@ Fiz_dictionary = {}
 Trash_dictionary = {}
 
 
+def write_csv(data, name):
+    with open(name, 'w') as f:
+        writer = csv.DictWriter(f, fieldnames=list(data[0].keys()), extrasaction='ignore', delimiter = ',', quoting=csv.QUOTE_NONNUMERIC)
+        writer.writeheader()
+        for d in data:
+            writer.writerow(d)
+        return
+
+
 with open('Корреспонденты.csv') as f:
     Ur_list = []
     Fiz_list = []
@@ -38,23 +47,20 @@ with open('Корреспонденты.csv') as f:
         if i>400:
             print('Ur_list = ')
             print(Ur_list) 
+            write_csv(Ur_list, 'csv_write_Ur.csv')
             print('Fiz_list = ')
             print(Fiz_list)
+            write_csv(Fiz_list, 'csv_write_Fiz.csv')
             print('Trash_list = ')
             print(Trash_list)
+            write_csv(Trash_list, 'csv_write_Trash.csv')
             break
    
 
 
 
 
-def write_Ur(data):
-    with open('csv_write_Ur.csv', 'w') as f:
-        writer = csv.DictWriter(f, fieldnames=list(data[0].keys()), quoting=csv.QUOTE_NONNUMERIC)
-        writer.writeheader()
-        for d in data:
-            writer.writerow(d)
-        return
+
 
    
     ##reader = csv.reader(f)
