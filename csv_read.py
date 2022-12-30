@@ -44,6 +44,19 @@ def main():
         
         button_login = driver.find_element(By.XPATH, '//div[@class="v-button v-widget cuba-login-submit v-button-cuba-login-submit v-has-width"]')
         button_login.click()
+        
+        #button_spravochnikiiiii = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//*[contains(text(), "Справочники")]')))
+        
+        #WebDriverWait wait = new WebDriverWait(driver, 3)
+        #wait.until(ExpectedConditions.elementToBeClickable(By.XPATH, '//span[@class="v-menubar-menuitem-caption"]'))
+        #WebDriverWait(driver, delay).until(EC.element_to_be_clickable('//span[@class="v-menubar-menuitem-caption"]'))
+        
+        
+        button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//span[@class="v-menubar-menuitem v-menubar-menuitem-selected"]')))
+        print ("Page is ready!")
+        #button_spravochniki = driver.find_element(By.XPATH, '//span[@class="v-menubar-menuitem-caption"]')
+        button_spravochniki.click()
+        
     except TimeoutException:
         print ("Loading took too much time!")
     
