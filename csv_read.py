@@ -2,6 +2,7 @@ import csv
 import config
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.ui import Select
 #from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -52,7 +53,10 @@ def main():
         #WebDriverWait(driver, delay).until(EC.element_to_be_clickable('//span[@class="v-menubar-menuitem-caption"]'))
         
         
-        button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//span[@class="v-menubar-menuitem v-menubar-menuitem-selected"]')))
+        #button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//span[@class="v-menubar-menuitem v-menubar-menuitem-selected"]'))) #exeption 
+        button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//span[@class="v-menubar-menuitem"]')))
+        #select = Select(driver.find_element(By.XPATH, '//span[@class="v-menubar-menuitem"]'))
+        #select.select_by_visible_text('Справочники')
         print ("Page is ready!")
         #button_spravochniki = driver.find_element(By.XPATH, '//span[@class="v-menubar-menuitem-caption"]')
         button_spravochniki.click()
