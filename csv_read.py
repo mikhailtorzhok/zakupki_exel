@@ -1,4 +1,13 @@
 import csv
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+#from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
+
+
 Ur_list = []
 Fiz_list = []
 Trash_list = []
@@ -9,6 +18,30 @@ Trash_dictionary = {}
 
 def main():
     print("Hello World!")
+    #driver = webdriver.Firefox()
+    firefox_options = Options()
+    #firefox_options.set_headless()
+    driver = webdriver.Firefox(options=firefox_options)
+    driver.get("https://torsed.voskhod.ru/app/#!")
+    #login_input = driver.find_element_by_class_name("v-textfield v-widget username-field v-textfield-username-field v-has-width v-textfield-prompt")
+    #login_input = driver.find_element(By.NAME, "v-verticallayout v-layout v-vertical v-widget cuba-login-bottom v-verticallayout-cuba-login-bottom v-has-width")
+    #login_input = driver.find_element(By.xpath("//div/span"))
+    #login_input = driver.find_elements(By.XPATH, '//input') 
+    #login_input = driver.find_elements(By.XPATH, '//div')
+    #login_input = driver.find_elements(By.XPATH, '//input') 
+    #print(login_input)    
+    #login_input.send_keys("emailid@lambdatest.com")
+    
+    delay = 3 # seconds
+    try:
+        myElem = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
+        print ("Page is ready!")
+        login_input = driver.find_elements(By.XPATH, '//input')
+        print(login_input) 
+        login_input[0].send_keys("emailid@lambdatest.com")
+    except TimeoutException:
+        print ("Loading took too much time!")
+    
 
 
 def write_csv(data, name):
