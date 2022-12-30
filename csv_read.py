@@ -1,4 +1,5 @@
 import csv
+import config
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 #from selenium.webdriver.common.by import By
@@ -34,11 +35,15 @@ def main():
     
     delay = 3 # seconds
     try:
-        myElem = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
+        login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
         print ("Page is ready!")
         login_input = driver.find_elements(By.XPATH, '//input')
         print(login_input) 
-        login_input[0].send_keys("emailid@lambdatest.com")
+        login_input[0].send_keys(config.username)
+        login_input[1].send_keys(config.password)
+        
+        button_login = driver.find_element(By.XPATH, '//div[@class="v-button v-widget cuba-login-submit v-button-cuba-login-submit v-has-width"]')
+        button_login.click()
     except TimeoutException:
         print ("Loading took too much time!")
     
