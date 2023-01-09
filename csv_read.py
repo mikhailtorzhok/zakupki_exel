@@ -232,7 +232,13 @@ def press_button_OK(driver, delay):
     find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[3]/div/div/div/div[1]/div/span/span')
     return
 
-def write_Post_address(address, driver, delay):
+def write_Post_address(address, full_address, driver, delay):
+    print('full_address is  ' + full_address)
+    input_address = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/textarea')))
+    #input_address = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/textarea')))
+    input_address.send_keys(full_address)
+    input_address.send_keys(Keys.RETURN)
+
     address_list=address.split()
     for item in address_list:
 
@@ -241,12 +247,13 @@ def write_Post_address(address, driver, delay):
             index = item.partition('=')[2]
             #print(index)
             input_index = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input')))
-            input_index.send_keys(place_of_creating)
+            input_index.send_keys(index)
             input_index.send_keys(Keys.RETURN)
             time.sleep(timedelay)
             #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input
             #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[37]/span/input') 
         elif item.find('Регион') != -1 :
+            pass
             print(item)
             region = item.partition('=')[2]
             print(region)
@@ -257,9 +264,27 @@ def write_Post_address(address, driver, delay):
             region_input.send_keys(region)
             region_input.send_keys(Keys.RETURN)
             time.sleep(timedelay)            
-            region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/span/span'))) 
-            region_input_button_inside.click()
-            time.sleep(timedelay)  
+            region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
+            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]
+            #old_span/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/span/span
+            #Actions action = new Actions(driver).contextClick(region_input_button_inside).sendKeys(Keys.ARROW_UP).sendKeys(Keys.ENTER)
+            #action.build().perform()
+            
+            action = ActionChains(driver)
+            action.move_to_element(region_input_button_inside)
+            #action.context_click(on_element = region_input_button_inside)
+            action.double_click(on_element = region_input_button_inside)
+            action.perform()
+
+            #time.sleep(0.01) 
+            #region_select = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div/div/div/span/span')))
+            #region_select.click()
+
+
+            
+            #region_input_button_inside.click()
+            #time.sleep(0.01) 
+            #region_input_button_inside.click() 
         else:
             pass
     return
@@ -306,7 +331,7 @@ def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридич
             write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
             time.sleep(timedelay)
 
-            write_Post_address(row['ЭлементЗначенияПолей'],driver, delay)
+            write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
             time.sleep(timedelay)
             
             driver.execute_script("window.scrollTo(0, 1080)")
