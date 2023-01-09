@@ -12,7 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time 
 
-timedelay=0.2
+timedelay=0.3
 Ur_list = []
 Fiz_list = []
 Trash_list = []
@@ -140,13 +140,17 @@ def write_OGRN_Ur(OGRN_Ur,driver, delay):
     return
 
 def write_OKOPF_Ur(OKOPF_Ur,driver, delay):
-    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[29]/div/input')))
-    input.send_keys(OKOPF_Ur)
-    input.send_keys(Keys.RETURN)
-    span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span')))
+    try:
+        wait = WebDriverWait(driver, 2)
+        input = wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[29]/div/input')))
+        input.send_keys(OKOPF_Ur)
+        input.send_keys(Keys.RETURN)
+        span = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span')))
                                                                                         #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span
                                                                                         #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[2]/td
-    span.click()
+        span.click()
+    except:
+        pass    
     return
 
 def write_Type_Ur(Type_Ur, driver, delay):
@@ -166,8 +170,20 @@ def write_place_of_creating(place_of_creating, driver, delay):
     input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[8]/div[2]/div/div[1]/input')))
     input.send_keys(place_of_creating)
     input.send_keys(Keys.RETURN)
-    span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[1]/td/span')))
-    span.click()
+
+
+    find_element = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[8]/div[2]/div/div[3]')))
+    #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span
+    find_element.click()
+    time.sleep(timedelay)
+    button_element_new_page = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div[1]/div')))
+    button_element_new_page.click()
+
+
+    #span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[1]/td/span')))
+    #span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[1]/td/span')))
+    
+    #span.click()
     return
 
 def write_Nerezident(nerezident, driver, delay):
