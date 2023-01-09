@@ -2,14 +2,17 @@ import csv
 import config
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
-#from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+import time 
 
-
+timedelay=0.2
 Ur_list = []
 Fiz_list = []
 Trash_list = []
@@ -20,21 +23,14 @@ Trash_dictionary = {}
 
 def main():
     print("Hello World!")
-    #driver = webdriver.Firefox()
-    firefox_options = Options()
-    #firefox_options.set_headless()
-    driver = webdriver.Firefox(options=firefox_options)
+    chrome_options = Options()
+    chrome_options.add_experimental_option("detach", True)
+    driver = webdriver.Chrome(options=chrome_options) 
+    driver.set_window_size(1920, 1080)
     driver.get("https://torsed.voskhod.ru/app/#!")
-    #login_input = driver.find_element_by_class_name("v-textfield v-widget username-field v-textfield-username-field v-has-width v-textfield-prompt")
-    #login_input = driver.find_element(By.NAME, "v-verticallayout v-layout v-vertical v-widget cuba-login-bottom v-verticallayout-cuba-login-bottom v-has-width")
-    #login_input = driver.find_element(By.xpath("//div/span"))
-    #login_input = driver.find_elements(By.XPATH, '//input') 
-    #login_input = driver.find_elements(By.XPATH, '//div')
-    #login_input = driver.find_elements(By.XPATH, '//input') 
-    #print(login_input)    
-    #login_input.send_keys("emailid@lambdatest.com")
+
     
-    delay = 3 # seconds
+    delay = 25 # seconds
     try:
         login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
         print ("Page is ready!")
@@ -45,25 +41,239 @@ def main():
         
         button_login = driver.find_element(By.XPATH, '//div[@class="v-button v-widget cuba-login-submit v-button-cuba-login-submit v-has-width"]')
         button_login.click()
-        
-        #button_spravochnikiiiii = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//*[contains(text(), "Справочники")]')))
-        
-        #WebDriverWait wait = new WebDriverWait(driver, 3)
-        #wait.until(ExpectedConditions.elementToBeClickable(By.XPATH, '//span[@class="v-menubar-menuitem-caption"]'))
-        #WebDriverWait(driver, delay).until(EC.element_to_be_clickable('//span[@class="v-menubar-menuitem-caption"]'))
-        
-        
-        #button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//span[@class="v-menubar-menuitem v-menubar-menuitem-selected"]'))) #exeption 
-        button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//span[@class="v-menubar-menuitem"]')))
-        #select = Select(driver.find_element(By.XPATH, '//span[@class="v-menubar-menuitem"]'))
-        #select.select_by_visible_text('Справочники')
+   
+        button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//*[text()="Справочники"]')))
+        button_spravochniki = driver.find_element(By.CSS_SELECTOR, "span[class='v-menubar-menuitem']")
+ 
         print ("Page is ready!")
-        #button_spravochniki = driver.find_element(By.XPATH, '//span[@class="v-menubar-menuitem-caption"]')
-        button_spravochniki.click()
+
+        button_spravochniki = driver.find_element(By.CSS_SELECTOR, '.cuba-main-menu.v-menubar')
+
+        print ("tab_names " + button_spravochniki.text)
+ 
+        button_spravochniki = driver.find_element(By.CSS_SELECTOR, "div[tabindex='0']")
+
+        button_spravochniki = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div[1]/div/div/div[3]/div/span[5]")
+        action = ActionChains(driver)
+        action.move_to_element(button_spravochniki)
+        action.click(button_spravochniki)
+        action.perform()
+
+        #button_Kontragenty
+        find_and_click_element_by_path(driver, delay, '/html/body/div[3]/div[2]/div/div/span[6]/span[1]')
+      
+
+        #button_Ur_litca 
+        find_and_click_element_by_path(driver, delay, '/html/body/div[3]/div[3]/div/div/span[1]/span[1]')                                                                   
+     
+
+        #button_create_new
+        #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div/div[3]/div/div[1]/div/div[1]/div/div[1]/div')
+       
+        #name_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
+        #name_input.send_keys('Наименование')
         
+        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
+    
+
+
+
     except TimeoutException:
         print ("Loading took too much time!")
     
+def write_name_Ur(name_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
+    input.send_keys(name_Ur)
+    return
+
+def write_fullname_Ur(fullname_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[6]/div/textarea')))
+    input.send_keys(fullname_Ur)
+    return
+
+def write_telephone_Ur(telephone_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[10]/input')))
+    input.send_keys(telephone_Ur)
+    return
+
+def write_fax_Ur(fax_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[12]/input')))
+    input.send_keys(fax_Ur)
+    return
+
+def write_E_mail_Ur(E_mail_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[14]/input')))
+    input.send_keys(E_mail_Ur)
+    return
+
+def write_site_Ur(site_Ur,driver, delay):
+    find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div/div[3]/div')
+    time.sleep(timedelay)
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div/div[1]/div/a')))
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div/div[1]/div/a
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div/div[1]/div/a/span
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div/div[1]/div/a/span
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[16]/div/div/div[1]/div/a
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[15]
+    time.sleep(timedelay)
+    input.send_keys(Keys.RETURN)
+    input.send_keys(site_Ur)
+    input.send_keys(Keys.RETURN)
+
+    return
+
+def write_INN_Ur(INN_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[18]/input')))
+    input.send_keys(INN_Ur)
+    return
+
+def write_KPP_Ur(KPP_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[23]/input')))
+    input.send_keys(KPP_Ur)
+    return
+
+def write_OGRN_Ur(OGRN_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[27]/input')))
+    input.send_keys(OGRN_Ur)
+    return
+
+def write_OKOPF_Ur(OKOPF_Ur,driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[29]/div/input')))
+    input.send_keys(OKOPF_Ur)
+    input.send_keys(Keys.RETURN)
+    span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span')))
+                                                                                        #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span
+                                                                                        #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[2]/td
+    span.click()
+    return
+
+def write_Type_Ur(Type_Ur, driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[41]/div[2]/input')))
+    input.send_keys('Общественные организации')
+    input.send_keys(Keys.RETURN)
+
+    span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span')))
+    #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[2]/td
+    #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[10]/td
+    #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[10]/td/span
+    #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span
+    span.click()
+    return
+
+def write_place_of_creating(place_of_creating, driver, delay):
+    input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[8]/div[2]/div/div[1]/input')))
+    input.send_keys(place_of_creating)
+    input.send_keys(Keys.RETURN)
+    span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[1]/td/span')))
+    span.click()
+    return
+
+def write_Nerezident(nerezident, driver, delay):
+    if nerezident == 'Да':
+        #print('inside nerezident if')
+        find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[33]/span/input') 
+        #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[33]/span/input
+        #chechbox = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[33]/span/label')))
+    elif nerezident == 'Нет':
+        pass
+    else:
+        pass
+    return
+
+def write_Postavchick(postavchick, driver, delay):
+    if postavchick == 'Да':
+        #print('inside postavchick if')
+        find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[35]/span/input') 
+    elif postavchick == 'Нет':
+        pass
+    else:
+        pass
+    return
+
+def write_Pokupatel(pokupatel, driver, delay):
+    if pokupatel == 'Да':
+        #print('inside postavchick if')
+        find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[37]/span/input') 
+    elif pokupatel == 'Нет':
+        pass
+    else:
+        pass
+    return
+
+def press_button_OK(driver, delay):
+    find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[3]/div/div/div/div[1]/div/span/span')
+    return
+
+
+def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридическое лицо.csv'):
+    with open(filename, encoding='utf-8') as f:
+        #Ur_list = []
+        #Fiz_list = []
+        #Trash_list = []
+        reader = csv.DictReader(f)
+        i=0
+        for row in reader:
+            print(row)
+            #button_create_new
+            find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div/div[3]/div/div[1]/div/div[1]/div/div[1]/div')
+            time.sleep(timedelay)
+            i+=1
+            #if i == 1:
+                #continue
+            #print(row['Ссылка'])
+            
+            
+            write_name_Ur(row['Ссылка'],driver, delay)
+            time.sleep(timedelay)
+            write_fullname_Ur(row['ПолноеНаименование'],driver, delay)
+            time.sleep(timedelay)
+            write_place_of_creating('Тверская область',driver, delay)
+            time.sleep(timedelay)
+            write_telephone_Ur(row['ЭлементНомерТелефонаБезКодов'],driver, delay)
+            time.sleep(timedelay)
+            write_fax_Ur(row['ЭлементНомерТелефона'],driver, delay)
+            time.sleep(timedelay)
+            write_E_mail_Ur(row['ЭлементДоменноеИмяСервера'],driver, delay)
+            time.sleep(timedelay)
+            #write_site_Ur(row['Сайт'],driver, delay)
+            #time.sleep(timedelay)
+            write_INN_Ur(row['ИНН'],driver, delay)
+            time.sleep(timedelay)
+            write_KPP_Ur(row['КПП'],driver, delay)
+            time.sleep(timedelay)
+            #write_OGRN_Ur(row['ОГРН'],driver, delay)
+            #time.sleep(timedelay)
+            write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
+            time.sleep(timedelay)
+
+
+            
+            driver.execute_script("window.scrollTo(0, 1080)")
+            time.sleep(timedelay)
+         
+
+            write_Type_Ur(row['ВидКорреспондента'],driver, delay) 
+            time.sleep(timedelay)
+            #write_Nerezident(row['Нерезидент'],driver, delay)
+            #time.sleep(timedelay)
+            #write_Postavchick(row['Поставщик'],driver, delay)
+            #time.sleep(timedelay)
+            #write_Pokupatel(row['Покупатель'],driver, delay)
+            #time.sleep(timedelay)
+            press_button_OK(driver, delay)
+            time.sleep(timedelay)
+    return
+
+
+def find_and_click_element_by_path(driver, delay, path):
+    button = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, path)))
+    action = ActionChains(driver)
+    action.move_to_element(button)
+    action.click(button)
+    action.perform()
+    return
 
 
 def write_csv(data, name):
@@ -76,7 +286,6 @@ def write_csv(data, name):
 
 
 def split_main_csv_to_3(name='Корреспонденты.csv'):
-
     with open('Корреспонденты.csv') as f:
         #Ur_list = []
         #Fiz_list = []
@@ -122,13 +331,3 @@ def split_main_csv_to_3(name='Корреспонденты.csv'):
 if __name__ == "__main__":
     main()
 
-
-
-   
-    ##reader = csv.reader(f)
-    ##headers = next(reader)
-    ##print('Headers: ', headers)
-    ##firstRow = next(reader)
-    ##print('firstRow: ', firstRow)
-    ##for row in reader:
-        ##print(row)
