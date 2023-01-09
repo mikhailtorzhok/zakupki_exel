@@ -30,7 +30,7 @@ def main():
     driver.get("https://torsed.voskhod.ru/app/#!")
 
     
-    delay = 25 # seconds
+    delay = 10 # seconds
     try:
         login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
         print ("Page is ready!")
@@ -234,16 +234,17 @@ def press_button_OK(driver, delay):
 
 def write_Post_address(address, full_address, driver, delay):
     print('full_address is  ' + full_address)
-    input_address = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/textarea')))
     #input_address = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/textarea')))
-    input_address.send_keys(full_address)
-    input_address.send_keys(Keys.RETURN)
+    #input_address = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/textarea')))
+    #input_address.send_keys(full_address)
+    #input_address.send_keys(Keys.RETURN)
 
     address_list=address.split()
     for item in address_list:
 
         if item.find('Индекс') != -1 :
             #print(item)
+            print("INSIDE INDEX")
             index = item.partition('=')[2]
             #print(index)
             input_index = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input')))
@@ -254,7 +255,7 @@ def write_Post_address(address, full_address, driver, delay):
             #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[37]/span/input') 
         elif item.find('Регион') != -1 :
             #pass
-            #print(item)
+            print("INSIDE REGION")
             region = item.partition('=')[2]
             #print(region)
             region_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]')))
@@ -285,10 +286,15 @@ def write_Post_address(address, full_address, driver, delay):
             #region_input_button_inside.click()
             #time.sleep(0.01) 
             #region_input_button_inside.click() 
+        elif item.find('Регион') == -1 :
+            print("Else inside ELIF")
         elif item.find('Город') != -1 :
             #pass
+            print("INSIDE GOROD")
             gorod = item.partition('=')[2]
             gorod_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]')))
+            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
+            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[9]/div/div/div[2]
             #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
             gorod_button_input.click()
 
@@ -346,8 +352,8 @@ def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридич
             time.sleep(timedelay)
             #write_OGRN_Ur(row['ОГРН'],driver, delay)
             #time.sleep(timedelay)
-            write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
-            time.sleep(timedelay)
+            #write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
+            #time.sleep(timedelay)
 
             write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
             time.sleep(timedelay)
