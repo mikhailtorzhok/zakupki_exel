@@ -158,7 +158,16 @@ def write_Type_Ur(Type_Ur, driver, delay):
     input.send_keys('Общественные организации')
     input.send_keys(Keys.RETURN)
 
-    span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span')))
+    time.sleep(timedelay)
+    drop_down_list=WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[41]/div[2]/div')))
+    drop_down_list.click()
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[41]/div[2]/div
+    time.sleep(timedelay)
+    
+    span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[6]/td/span')))
+    
+    #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[6]/td/span
+    #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span
     #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[2]/td
     #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[10]/td
     #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[10]/td/span
@@ -170,10 +179,11 @@ def write_place_of_creating(place_of_creating, driver, delay):
     input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[8]/div[2]/div/div[1]/input')))
     input.send_keys(place_of_creating)
     input.send_keys(Keys.RETURN)
-
+    time.sleep(timedelay)
 
     find_element = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[8]/div[2]/div/div[3]')))
     #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr/td/span
+    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[8]/div[2]/div/div[3]
     find_element.click()
     time.sleep(timedelay)
     button_element_new_page = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/div/div/div/div[2]/div/div/div/div/div[1]/div')))
