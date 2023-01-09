@@ -163,7 +163,7 @@ def write_Type_Ur(Type_Ur, driver, delay):
     drop_down_list.click()
     #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[41]/div[2]/div
     time.sleep(timedelay)
-    
+
     span = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[6]/td/span')))
     
     #/html/body/div[3]/div[2]/div/div[2]/table/tbody/tr[6]/td/span
@@ -232,6 +232,38 @@ def press_button_OK(driver, delay):
     find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[3]/div/div/div/div[1]/div/span/span')
     return
 
+def write_Post_address(address, driver, delay):
+    address_list=address.split()
+    for item in address_list:
+
+        if item.find('Индекс') != -1 :
+            #print(item)
+            index = item.partition('=')[2]
+            #print(index)
+            input_index = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input')))
+            input_index.send_keys(place_of_creating)
+            input_index.send_keys(Keys.RETURN)
+            time.sleep(timedelay)
+            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input
+            #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[37]/span/input') 
+        elif item.find('Регион') != -1 :
+            print(item)
+            region = item.partition('=')[2]
+            print(region)
+            region_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]')))
+            region_button_input.click()
+            time.sleep(timedelay)
+            region_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
+            region_input.send_keys(region)
+            region_input.send_keys(Keys.RETURN)
+            time.sleep(timedelay)            
+            region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/span/span'))) 
+            region_input_button_inside.click()
+            time.sleep(timedelay)  
+        else:
+            pass
+    return
+
 
 def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридическое лицо.csv'):
     with open(filename, encoding='utf-8') as f:
@@ -274,7 +306,8 @@ def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридич
             write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
             time.sleep(timedelay)
 
-
+            write_Post_address(row['ЭлементЗначенияПолей'],driver, delay)
+            time.sleep(timedelay)
             
             driver.execute_script("window.scrollTo(0, 1080)")
             time.sleep(timedelay)
