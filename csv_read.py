@@ -31,55 +31,65 @@ def main():
 
     
     delay = 5 # seconds
-    try:
-        login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
-        print ("Page is ready!")
-        login_input = driver.find_elements(By.XPATH, '//input')
-        print(login_input) 
-        login_input[0].send_keys(config.username)
-        login_input[1].send_keys(config.password)
-        
-        button_login = driver.find_element(By.XPATH, '//div[@class="v-button v-widget cuba-login-submit v-button-cuba-login-submit v-has-width"]')
-        button_login.click()
-   
-        button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//*[text()="Справочники"]')))
-        button_spravochniki = driver.find_element(By.CSS_SELECTOR, "span[class='v-menubar-menuitem']")
- 
-        print ("Page is ready!")
-
-        button_spravochniki = driver.find_element(By.CSS_SELECTOR, '.cuba-main-menu.v-menubar')
-
-        print ("tab_names " + button_spravochniki.text)
- 
-        button_spravochniki = driver.find_element(By.CSS_SELECTOR, "div[tabindex='0']")
-
-        button_spravochniki = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div[1]/div/div/div[3]/div/span[5]")
-        action = ActionChains(driver)
-        action.move_to_element(button_spravochniki)
-        action.click(button_spravochniki)
-        action.perform()
-
-        #button_Kontragenty
-        find_and_click_element_by_path(driver, delay, '/html/body/div[3]/div[2]/div/div/span[6]/span[1]')
-      
-
-        #button_Ur_litca 
-        find_and_click_element_by_path(driver, delay, '/html/body/div[3]/div[3]/div/div/span[1]/span[1]')                                                                   
-     
-
-        #button_create_new
-        #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div/div[3]/div/div[1]/div/div[1]/div/div[1]/div')
-       
-        #name_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
-        #name_input.send_keys('Наименование')
-        
-        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
     
+    login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
+    print ("Page is ready!")
+    login_input = driver.find_elements(By.XPATH, '//input')
+    print(login_input) 
+    login_input[0].send_keys(config.username)
+    login_input[1].send_keys(config.password)
+            
+    button_login = driver.find_element(By.XPATH, '//div[@class="v-button v-widget cuba-login-submit v-button-cuba-login-submit v-has-width"]')
+    button_login.click()
+    
+    button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//*[text()="Справочники"]')))
+    button_spravochniki = driver.find_element(By.CSS_SELECTOR, "span[class='v-menubar-menuitem']")
+    
+    print ("Page is ready!")
 
+    button_spravochniki = driver.find_element(By.CSS_SELECTOR, '.cuba-main-menu.v-menubar')
 
+    print ("tab_names " + button_spravochniki.text)
+    
+    button_spravochniki = driver.find_element(By.CSS_SELECTOR, "div[tabindex='0']")
 
-    except TimeoutException:
-        print ("Loading took too much time!")
+    button_spravochniki = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div[1]/div/div/div[3]/div/span[5]")
+    action = ActionChains(driver)
+    action.move_to_element(button_spravochniki)
+    action.click(button_spravochniki)
+    action.perform()
+
+    #button_Kontragenty
+    find_and_click_element_by_path(driver, delay, '/html/body/div[3]/div[2]/div/div/span[6]/span[1]')
+        
+
+    #button_Ur_litca 
+    find_and_click_element_by_path(driver, delay, '/html/body/div[3]/div[3]/div/div/span[1]/span[1]')                                                                   
+        
+
+    #button_create_new
+    #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div/div[3]/div/div[1]/div/div[1]/div/div[1]/div')
+        
+    #name_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
+    #name_input.send_keys('Наименование')
+            
+
+    while True:
+        try:
+
+            read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
+
+        except TimeoutException as e:
+            #pass
+            print ("Loading took too much time!")
+            print ('TimeoutException print after continue')
+            print(e)
+            #driver.get("https://torsed.voskhod.ru/app/#!")
+            #driver.back()
+            continue
+        else:
+            print('End of scrypt') 
+     
     
 def write_name_Ur(name_Ur,driver, delay):
     input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
@@ -318,10 +328,33 @@ def write_Post_address(address, full_address, driver, delay):
                 action.move_to_element(gorod_input_button_inside)
                 action.double_click(on_element = gorod_input_button_inside)
                 action.perform()
+            elif item.find('Улица') != -1 :
+                #pass
+                print("INSIDE Ulitca")
+                ulitca = item.partition('=')[2]
+                ulitca_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[13]/div/div/div[2]')))
+
+                ulitca_button_input.click()
+
+                time.sleep(timedelay)
+                ulitca_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
+
+                ulitca_input.send_keys(ulitca)
+                ulitca_input.send_keys(Keys.RETURN)
+                time.sleep(timedelay)            
+                ulitca_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
+                #/html/body/div[3]/div[1]/div/div/div[1]/div
+                action = ActionChains(driver)
+                action.move_to_element(ulitca_input_button_inside)
+                action.double_click(on_element = ulitca_input_button_inside)
+                action.perform()
             else:
                 pass
         except Exception:
-            pass  # or you could use 'continue'
+            #pass  # or you could use 'continue'
+            print('before continue')
+            continue
+            print('after continue')
 
     return
 
