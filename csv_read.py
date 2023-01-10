@@ -30,7 +30,7 @@ def main():
     driver.get("https://torsed.voskhod.ru/app/#!")
 
     
-    delay = 10 # seconds
+    delay = 5 # seconds
     try:
         login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
         print ("Page is ready!")
@@ -241,85 +241,88 @@ def write_Post_address(address, full_address, driver, delay):
 
     address_list=address.split()
     for item in address_list:
-
-        if item.find('Индекс') != -1 :
-            #print(item)
-            print("INSIDE INDEX")
-            index = item.partition('=')[2]
-            #print(index)
-            input_index = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input')))
-            input_index.send_keys(index)
-            input_index.send_keys(Keys.RETURN)
-            time.sleep(timedelay)
-            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input
-            #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[37]/span/input') 
-        elif item.find('Регион') != -1 :
-            #pass
-            print("INSIDE REGION")
-            region = item.partition('=')[2]
-            #print(region)
-            region_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]')))
-            region_button_input.click()
-            time.sleep(timedelay)
-            region_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
-            region_input.send_keys(region)
-            region_input.send_keys(Keys.RETURN)
-            time.sleep(timedelay)            
-            region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
-            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]
-            #old_span/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/span/span
-            #Actions action = new Actions(driver).contextClick(region_input_button_inside).sendKeys(Keys.ARROW_UP).sendKeys(Keys.ENTER)
-            #action.build().perform()
-            
-            action = ActionChains(driver)
-            action.move_to_element(region_input_button_inside)
-            #action.context_click(on_element = region_input_button_inside)
-            action.double_click(on_element = region_input_button_inside)
-            action.perform()
-
-            #time.sleep(0.01) 
-            #region_select = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div/div/div/span/span')))
-            #region_select.click()
-
-
-            
-            #region_input_button_inside.click()
-            #time.sleep(0.01) 
-            #region_input_button_inside.click() 
-        #elif item.find('Регион') == -1 :
-            #print("Else inside ELIF")
-        elif item.find('Город') != -1 :
-            #pass
-            print("INSIDE GOROD")
-            if item.find('Регион') == -1 :
-                #pass ## ERROR HERE
-                print("ERROR HERE")
+        try:
+            if item.find('Индекс') != -1 :
+                #print(item)
+                print("INSIDE INDEX")
+                index = item.partition('=')[2]
+                #print(index)
+                input_index = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input')))
+                input_index.send_keys(index)
+                input_index.send_keys(Keys.RETURN)
+                time.sleep(timedelay)
+                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input
+                #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[37]/span/input') 
+            elif item.find('Регион') != -1 :
+                #pass
+                print("INSIDE REGION")
+                region = item.partition('=')[2]
+                #print(region)
                 region_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]')))
-                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]
                 region_button_input.click()
                 time.sleep(timedelay)
-                driver.back()
-                time.sleep(timedelay)
-            gorod = item.partition('=')[2]
-            gorod_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]')))
-            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
-            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[9]/div/div/div[2]
-            #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
-            gorod_button_input.click()
+                region_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
+                region_input.send_keys(region)
+                region_input.send_keys(Keys.RETURN)
+                time.sleep(timedelay)            
+                region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
+                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]
+                #old_span/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/span/span
+                #Actions action = new Actions(driver).contextClick(region_input_button_inside).sendKeys(Keys.ARROW_UP).sendKeys(Keys.ENTER)
+                #action.build().perform()
+                
+                action = ActionChains(driver)
+                action.move_to_element(region_input_button_inside)
+                #action.context_click(on_element = region_input_button_inside)
+                action.double_click(on_element = region_input_button_inside)
+                action.perform()
 
-            time.sleep(timedelay)
-            gorod_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
-            gorod_input.send_keys(gorod)
-            gorod_input.send_keys(Keys.RETURN)
-            time.sleep(timedelay)            
-            gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
-           
-            action = ActionChains(driver)
-            action.move_to_element(gorod_input_button_inside)
-            action.double_click(on_element = gorod_input_button_inside)
-            action.perform()
-        else:
-            pass
+                #time.sleep(0.01) 
+                #region_select = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div/div/div/span/span')))
+                #region_select.click()
+
+
+                
+                #region_input_button_inside.click()
+                #time.sleep(0.01) 
+                #region_input_button_inside.click() 
+            #elif item.find('Регион') == -1 :
+                #print("Else inside ELIF")
+            elif item.find('Город') != -1 :
+                #pass
+                print("INSIDE GOROD")
+                #if item.find('Регион') == -1 :
+                    #pass ## ERROR HERE
+                    #print("ERROR HERE")
+                    #region_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]')))
+                    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]
+                    #region_button_input.click()
+                    #time.sleep(timedelay)
+                    #driver.back()
+                    #time.sleep(timedelay)
+                gorod = item.partition('=')[2]
+                gorod_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]')))
+                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
+                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[9]/div/div/div[2]
+                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
+                gorod_button_input.click()
+
+                time.sleep(timedelay)
+                gorod_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
+                gorod_input.send_keys(gorod)
+                gorod_input.send_keys(Keys.RETURN)
+                time.sleep(timedelay)            
+                gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
+            
+                action = ActionChains(driver)
+                action.move_to_element(gorod_input_button_inside)
+                action.double_click(on_element = gorod_input_button_inside)
+                action.perform()
+            else:
+                pass
+        except Exception:
+            pass  # or you could use 'continue'
+
     return
 
 
