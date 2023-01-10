@@ -286,11 +286,20 @@ def write_Post_address(address, full_address, driver, delay):
             #region_input_button_inside.click()
             #time.sleep(0.01) 
             #region_input_button_inside.click() 
-        elif item.find('Регион') == -1 :
-            print("Else inside ELIF")
+        #elif item.find('Регион') == -1 :
+            #print("Else inside ELIF")
         elif item.find('Город') != -1 :
             #pass
             print("INSIDE GOROD")
+            if item.find('Регион') == -1 :
+                #pass ## ERROR HERE
+                print("ERROR HERE")
+                region_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]')))
+                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]
+                region_button_input.click()
+                time.sleep(timedelay)
+                driver.back()
+                time.sleep(timedelay)
             gorod = item.partition('=')[2]
             gorod_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]')))
             #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
