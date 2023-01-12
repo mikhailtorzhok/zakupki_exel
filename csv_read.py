@@ -11,6 +11,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time 
+import signal
 
 timedelay=0.3
 Ur_list = []
@@ -30,7 +31,7 @@ def main():
     driver.get("https://torsed.voskhod.ru/app/#!")
 
     
-    delay = 5 # seconds
+    delay = 25 # seconds
     
     login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
     print ("Page is ready!")
@@ -73,23 +74,24 @@ def main():
     #name_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
     #name_input.send_keys('Наименование')
             
-
+    signal.signal(signal.SIGABRT, handler)
+    signal.alarm(5)
     while True:
         try:
 
             read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
 
-        except TimeoutException as e:
-            #pass
-            print ("Loading took too much time!")
-            print ('TimeoutException print after continue')
+        except Exception as e:
             print(e)
             #driver.get("https://torsed.voskhod.ru/app/#!")
             #driver.back()
             continue
         else:
             print('End of scrypt') 
-     
+
+def handler(signum, frame):
+    print("Forever is over!")
+    raise Exception("end of time")   
     
 def write_name_Ur(name_Ur,driver, delay):
     input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
@@ -400,8 +402,13 @@ def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридич
             #write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
             #time.sleep(timedelay)
 
-            write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
-            time.sleep(timedelay)
+            try:
+                write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+                time.sleep(timedelay)
+            except TimeoutException as e:
+                print(e)
+                driver.back()
+                continue
             
             driver.execute_script("window.scrollTo(0, 1080)")
             time.sleep(timedelay)
