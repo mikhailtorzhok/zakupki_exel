@@ -12,6 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time 
 import signal
+import stopit
 
 timedelay=0.3
 Ur_list = []
@@ -31,7 +32,7 @@ def main():
     driver.get("https://torsed.voskhod.ru/app/#!")
 
     
-    delay = 25 # seconds
+    delay = 5 # seconds
     
     login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
     print ("Page is ready!")
@@ -74,24 +75,25 @@ def main():
     #name_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
     #name_input.send_keys('Наименование')
             
-    signal.signal(signal.SIGABRT, handler)
-    signal.alarm(5)
+    #signal.signal(signal.SIGABRT, handler)
+    #signal.alarm(5)
     while True:
-        try:
+        #try:
 
-            read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
+        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv', callback_func_with_timeout)
 
-        except Exception as e:
-            print(e)
+        #except Exception as e:
+            #print(e)
+            #print('exception in line 86')
             #driver.get("https://torsed.voskhod.ru/app/#!")
             #driver.back()
-            continue
-        else:
-            print('End of scrypt') 
+            #continue
+        #else:
+            #print('End of scrypt') 
 
-def handler(signum, frame):
-    print("Forever is over!")
-    raise Exception("end of time")   
+#def handler(signum, frame):
+    #print("Forever is over!")
+    #raise Exception("end of time")   
     
 def write_name_Ur(name_Ur,driver, delay):
     input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[4]/input')))
@@ -253,7 +255,7 @@ def write_Post_address(address, full_address, driver, delay):
 
     address_list=address.split()
     for item in address_list:
-        try:
+        #try:
             if item.find('Индекс') != -1 :
                 #print(item)
                 print("INSIDE INDEX")
@@ -350,18 +352,51 @@ def write_Post_address(address, full_address, driver, delay):
                 action.move_to_element(ulitca_input_button_inside)
                 action.double_click(on_element = ulitca_input_button_inside)
                 action.perform()
-            else:
+            else:               
                 pass
-        except Exception:
+        #except Exception:
             #pass  # or you could use 'continue'
-            print('before continue')
-            continue
-            print('after continue')
+            #print('before continue')
+            #driver.back()
+            #continue
+            #print('after continue')
+            
 
     return
 
+def callback_func_with_timeout(row, driver, delay):
+    with stopit.ThreadingTimeout(5) as to_ctx_mgr:
+                assert to_ctx_mgr.state == to_ctx_mgr.EXECUTING
+                # Something potentially very long but which
+                # ...
+                write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
 
-def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридическое лицо.csv'):
+            # OK, let's check what happened
+            if to_ctx_mgr.state == to_ctx_mgr.EXECUTED:
+                # All's fine, everything was executed within 10 seconds
+                print('All is fine, everything was executed within 5 seconds')
+                #pass
+            elif to_ctx_mgr.state == to_ctx_mgr.EXECUTING:
+                # Hmm, that's not possible outside the block
+                print('Hmm, that is not possible outside the block')
+            elif to_ctx_mgr.state == to_ctx_mgr.TIMED_OUT:
+                # Eeek the 5 seconds timeout occurred while executing the block
+                print('Eeek the 5 seconds timeout occurred while executing the block')
+                driver.back()
+            elif to_ctx_mgr.state == to_ctx_mgr.INTERRUPTED:
+                # Oh you raised specifically the TimeoutException in the block
+                print('Oh you raised specifically the TimeoutException in the block')
+            elif to_ctx_mgr.state == to_ctx_mgr.CANCELED:
+                # Oh you called to_ctx_mgr.cancel() method within the block but it
+                # executed till the end
+                print('Oh you called to_ctx_mgr.cancel() method within the block but it executed till the end')
+            else:
+                # That's not possible
+                print('That is not possible')
+    return
+
+
+def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридическое лицо.csv', callback):
     with open(filename, encoding='utf-8') as f:
         #Ur_list = []
         #Fiz_list = []
@@ -402,13 +437,18 @@ def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридич
             #write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
             #time.sleep(timedelay)
 
-            try:
-                write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
-                time.sleep(timedelay)
-            except TimeoutException as e:
-                print(e)
-                driver.back()
-                continue
+
+            ###################################################################################################
+            callback(row, driver, delay)
+            #callback_func_with_timeout(row, driver, delay)
+
+            #try:
+            #write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+            #time.sleep(timedelay)
+            #except TimeoutException as e:
+                #print(e)
+                #driver.back()
+                #continue
             
             driver.execute_script("window.scrollTo(0, 1080)")
             time.sleep(timedelay)
