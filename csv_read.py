@@ -32,7 +32,7 @@ def main():
     driver.get("https://torsed.voskhod.ru/app/#!")
 
     
-    delay = 5 # seconds
+    delay = 15 # seconds
     
     login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
     print ("Page is ready!")
@@ -440,7 +440,40 @@ def  read_from_csv_and_write_to_database_Ur(driver, delay, callback, filename='�
 
 
             ###################################################################################################
-            callback(row, driver, delay)
+            #callback(row, driver, delay)
+            with stopit.ThreadingTimeout(5) as to_ctx_mgr:
+                assert to_ctx_mgr.state == to_ctx_mgr.EXECUTING
+                # Something potentially very long but which
+                # ...
+                print('Something potentially very long but which')
+                write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+
+                # OK, let's check what happened
+                if to_ctx_mgr.state == to_ctx_mgr.EXECUTED:
+                    # All's fine, everything was executed within 10 seconds
+                    print('All is fine, everything was executed within 5 seconds')
+                    #pass
+                elif to_ctx_mgr.state == to_ctx_mgr.EXECUTING:
+                    # Hmm, that's not possible outside the block
+                    print('Hmm, that is not possible outside the block')
+                elif to_ctx_mgr.state == to_ctx_mgr.TIMED_OUT:
+                    # Eeek the 5 seconds timeout occurred while executing the block
+                    print('Eeek the 5 seconds timeout occurred while executing the block')
+                    driver.back()
+                elif to_ctx_mgr.state == to_ctx_mgr.INTERRUPTED:
+                    # Oh you raised specifically the TimeoutException in the block
+                    print('Oh you raised specifically the TimeoutException in the block')
+                elif to_ctx_mgr.state == to_ctx_mgr.CANCELED:
+                    # Oh you called to_ctx_mgr.cancel() method within the block but it
+                    # executed till the end
+                    print('Oh you called to_ctx_mgr.cancel() method within the block but it executed till the end')
+                else:
+                    # That's not possible
+                    print('That is not possible')
+
+
+
+
             #callback_func_with_timeout(row, driver, delay)
 
             #try:
