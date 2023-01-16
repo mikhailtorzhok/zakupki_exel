@@ -80,7 +80,7 @@ def main():
     while True:
         #try:
 
-        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv', callback_func_with_timeout)
+        read_from_csv_and_write_to_database_Ur(driver, delay, callback_func_with_timeout, 'Юридическое лицо_temp.csv')
 
         #except Exception as e:
             #print(e)
@@ -366,10 +366,11 @@ def write_Post_address(address, full_address, driver, delay):
 
 def callback_func_with_timeout(row, driver, delay):
     with stopit.ThreadingTimeout(5) as to_ctx_mgr:
-                assert to_ctx_mgr.state == to_ctx_mgr.EXECUTING
-                # Something potentially very long but which
-                # ...
-                write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+            assert to_ctx_mgr.state == to_ctx_mgr.EXECUTING
+            # Something potentially very long but which
+            # ...
+            print('Something potentially very long but which')
+            write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
 
             # OK, let's check what happened
             if to_ctx_mgr.state == to_ctx_mgr.EXECUTED:
@@ -396,7 +397,7 @@ def callback_func_with_timeout(row, driver, delay):
     return
 
 
-def read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридическое лицо.csv', callback):
+def  read_from_csv_and_write_to_database_Ur(driver, delay, callback, filename='Юридическое лицо.csv'):
     with open(filename, encoding='utf-8') as f:
         #Ur_list = []
         #Fiz_list = []
