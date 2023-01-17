@@ -26,7 +26,7 @@ Trash_dictionary = {}
 def main():
     print("Hello World!")
     chrome_options = Options()
-    chrome_options.page_load_strategy = "eager"
+    #chrome_options.page_load_strategy = "eager"
     chrome_options.add_experimental_option("detach", True)
     driver = webdriver.Chrome(options=chrome_options) 
     driver.set_window_size(1920, 1080)
@@ -333,6 +333,7 @@ def write_Post_address(address, full_address, driver, delay):
                 time.sleep(timedelay)            
                 
                 start_time = time.time()
+                counter_clicks=0
                 while(1):
                     pass
                     gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
@@ -340,11 +341,14 @@ def write_Post_address(address, full_address, driver, delay):
                     action.move_to_element(gorod_input_button_inside)
                     action.double_click(on_element = gorod_input_button_inside)
                     action.perform()
-                    
-                    if (time.time() - start_time)>3:
+                    counter_clicks+=1
+                    if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        break
-                driver.back()
+                        if counter_clicks==0:
+                            driver.back()
+                            break
+                        else:
+                            break
 
             elif item.find('Улица') != -1 :
                 #pass
@@ -364,6 +368,7 @@ def write_Post_address(address, full_address, driver, delay):
                 #driver.back()
 
                 start_time = time.time()
+                counter_clicks=0
                 while(1):
                     pass
                     ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
@@ -371,10 +376,14 @@ def write_Post_address(address, full_address, driver, delay):
                     action.move_to_element(ulitca_input_button_inside)
                     action.double_click(on_element = ulitca_input_button_inside)
                     action.perform()
-                    if (time.time() - start_time)>3:
+                    counter_clicks+=1
+                    if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        break
-                driver.back()
+                        if counter_clicks==0:
+                            driver.back()
+                            break
+                        else:
+                            break
 
                 #try:
                     #ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
