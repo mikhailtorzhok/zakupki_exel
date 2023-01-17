@@ -288,6 +288,7 @@ def write_Post_address(address, full_address, driver, delay):
                 #action.build().perform()
                 
                 start_time = time.time()
+                counter_clicks=0
                 while(1):
                     pass
                     region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
@@ -296,10 +297,15 @@ def write_Post_address(address, full_address, driver, delay):
                     #action.context_click(on_element = region_input_button_inside)
                     action.double_click(on_element = region_input_button_inside)
                     action.perform()
-                    if (time.time() - start_time)>3:
+                    counter_clicks+=1
+                    if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        break
-                driver.back()
+                        if counter_clicks==0:
+                            driver.back()
+                            break
+                        else:
+                            break
+                
 
             elif item.find('Город') != -1 :
                 #pass
