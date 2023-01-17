@@ -255,6 +255,7 @@ def write_Post_address(address, full_address, driver, delay):
     #input_address.send_keys(Keys.RETURN)
 
     address_list=address.split()
+    time_before_for = time.time()
     for item in address_list:
         #try:
             if item.find('Индекс') != -1 :
@@ -280,29 +281,26 @@ def write_Post_address(address, full_address, driver, delay):
                 region_input.send_keys(region)
                 region_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)            
-                region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
+                
                 #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]
                 #old_span/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/span/span
                 #Actions action = new Actions(driver).contextClick(region_input_button_inside).sendKeys(Keys.ARROW_UP).sendKeys(Keys.ENTER)
                 #action.build().perform()
                 
-                action = ActionChains(driver)
-                action.move_to_element(region_input_button_inside)
-                #action.context_click(on_element = region_input_button_inside)
-                action.double_click(on_element = region_input_button_inside)
-                action.perform()
+                start_time = time.time()
+                while(1):
+                    pass
+                    region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
+                    action = ActionChains(driver)
+                    action.move_to_element(region_input_button_inside)
+                    #action.context_click(on_element = region_input_button_inside)
+                    action.double_click(on_element = region_input_button_inside)
+                    action.perform()
+                    if (time.time() - start_time)>3:
+                        print("We are waiting for 3 sec")
+                        break
+                driver.back()
 
-                #time.sleep(0.01) 
-                #region_select = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div[2]/div/div/div/div/span/span')))
-                #region_select.click()
-
-
-                
-                #region_input_button_inside.click()
-                #time.sleep(0.01) 
-                #region_input_button_inside.click() 
-            #elif item.find('Регион') == -1 :
-                #print("Else inside ELIF")
             elif item.find('Город') != -1 :
                 #pass
                 print("INSIDE GOROD")
@@ -327,12 +325,21 @@ def write_Post_address(address, full_address, driver, delay):
                 gorod_input.send_keys(gorod)
                 gorod_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)            
-                gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
-            
-                action = ActionChains(driver)
-                action.move_to_element(gorod_input_button_inside)
-                action.double_click(on_element = gorod_input_button_inside)
-                action.perform()
+                
+                start_time = time.time()
+                while(1):
+                    pass
+                    gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
+                    action = ActionChains(driver)
+                    action.move_to_element(gorod_input_button_inside)
+                    action.double_click(on_element = gorod_input_button_inside)
+                    action.perform()
+                    
+                    if (time.time() - start_time)>3:
+                        print("We are waiting for 3 sec")
+                        break
+                driver.back()
+
             elif item.find('Улица') != -1 :
                 #pass
                 print("INSIDE Ulitca")
@@ -353,6 +360,11 @@ def write_Post_address(address, full_address, driver, delay):
                 start_time = time.time()
                 while(1):
                     pass
+                    ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
+                    action = ActionChains(driver)
+                    action.move_to_element(ulitca_input_button_inside)
+                    action.double_click(on_element = ulitca_input_button_inside)
+                    action.perform()
                     if (time.time() - start_time)>3:
                         print("We are waiting for 3 sec")
                         break
@@ -373,6 +385,10 @@ def write_Post_address(address, full_address, driver, delay):
                 #action.perform()
             else:               
                 pass
+                if (time.time() - time_before_for)>20:
+                        print("We are waiting for 20 sec")
+                        return
+                        #break
         #except Exception:
             #pass  # or you could use 'continue'
             #print('before continue')
