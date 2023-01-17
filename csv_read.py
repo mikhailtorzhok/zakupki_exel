@@ -26,6 +26,7 @@ Trash_dictionary = {}
 def main():
     print("Hello World!")
     chrome_options = Options()
+    chrome_options.page_load_strategy = "eager"
     chrome_options.add_experimental_option("detach", True)
     driver = webdriver.Chrome(options=chrome_options) 
     driver.set_window_size(1920, 1080)
@@ -336,6 +337,7 @@ def write_Post_address(address, full_address, driver, delay):
                 #pass
                 print("INSIDE Ulitca")
                 ulitca = item.partition('=')[2]
+    
                 ulitca_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[13]/div/div/div[2]')))
 
                 ulitca_button_input.click()
@@ -345,13 +347,30 @@ def write_Post_address(address, full_address, driver, delay):
 
                 ulitca_input.send_keys(ulitca)
                 ulitca_input.send_keys(Keys.RETURN)
-                time.sleep(timedelay)            
-                ulitca_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
-                #/html/body/div[3]/div[1]/div/div/div[1]/div
-                action = ActionChains(driver)
-                action.move_to_element(ulitca_input_button_inside)
-                action.double_click(on_element = ulitca_input_button_inside)
-                action.perform()
+                time.sleep(timedelay)
+                #driver.back()
+
+                start_time = time.time()
+                while(1):
+                    pass
+                    if (time.time() - start_time)>3:
+                        print("We are waiting for 3 sec")
+                        break
+                driver.back()
+
+                #try:
+                    #ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
+                #except TimeoutException as ex:
+                    #isrunning = 0
+                    #print("Exception has been thrown. " + str(ex))
+                    #driver.back()
+                    #print(e)
+                    #driver.back()
+                    #/html/body/div[3]/div[1]/div/div/div[1]/div
+                #action = ActionChains(driver)
+                #action.move_to_element(ulitca_input_button_inside)
+                #action.double_click(on_element = ulitca_input_button_inside)
+                #action.perform()
             else:               
                 pass
         #except Exception:
@@ -441,37 +460,19 @@ def  read_from_csv_and_write_to_database_Ur(driver, delay, callback, filename='�
 
             ###################################################################################################
             #callback(row, driver, delay)
-            with stopit.ThreadingTimeout(5) as to_ctx_mgr:
-                assert to_ctx_mgr.state == to_ctx_mgr.EXECUTING
-                # Something potentially very long but which
-                # ...
-                print('Something potentially very long but which')
-                write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+            #driver.set_page_load_timeout(1)
+            #try:
 
-                # OK, let's check what happened
-                if to_ctx_mgr.state == to_ctx_mgr.EXECUTED:
-                    # All's fine, everything was executed within 10 seconds
-                    print('All is fine, everything was executed within 5 seconds')
-                    #pass
-                elif to_ctx_mgr.state == to_ctx_mgr.EXECUTING:
-                    # Hmm, that's not possible outside the block
-                    print('Hmm, that is not possible outside the block')
-                elif to_ctx_mgr.state == to_ctx_mgr.TIMED_OUT:
-                    # Eeek the 5 seconds timeout occurred while executing the block
-                    print('Eeek the 5 seconds timeout occurred while executing the block')
-                    driver.back()
-                elif to_ctx_mgr.state == to_ctx_mgr.INTERRUPTED:
-                    # Oh you raised specifically the TimeoutException in the block
-                    print('Oh you raised specifically the TimeoutException in the block')
-                elif to_ctx_mgr.state == to_ctx_mgr.CANCELED:
-                    # Oh you called to_ctx_mgr.cancel() method within the block but it
-                    # executed till the end
-                    print('Oh you called to_ctx_mgr.cancel() method within the block but it executed till the end')
-                else:
-                    # That's not possible
-                    print('That is not possible')
+            print('Something potentially very long but which')
+            write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
 
 
+            #except TimeoutException as ex:
+                #isrunning = 0
+                #print("Exception has been thrown. " + str(ex))
+                #driver.back()
+                #print(e)
+                #driver.back()
 
 
             #callback_func_with_timeout(row, driver, delay)
