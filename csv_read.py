@@ -296,11 +296,17 @@ def write_Post_address(address, full_address, driver, delay):
                     action.move_to_element(region_input_button_inside)
                     #action.context_click(on_element = region_input_button_inside)
                     action.double_click(on_element = region_input_button_inside)
-                    action.perform()
-                    counter_clicks+=1
+                    flag_ex=False
+                    try:    
+                        action.perform()
+                        counter_clicks+=1
+                    except Exception:
+                        counter_clicks=0
+                        flag_ex=True
+                        pass
                     if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        if counter_clicks==0:
+                        if flag_ex==True:
                             driver.back()
                             break
                         else:
@@ -340,11 +346,17 @@ def write_Post_address(address, full_address, driver, delay):
                     action = ActionChains(driver)
                     action.move_to_element(gorod_input_button_inside)
                     action.double_click(on_element = gorod_input_button_inside)
-                    action.perform()
-                    counter_clicks+=1
+                    flag_ex=False
+                    try:    
+                        action.perform()
+                        counter_clicks+=1
+                    except Exception:
+                        flag_ex=True
+                        counter_clicks=0
+                        pass
                     if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        if counter_clicks==0:
+                        if flag_ex==True:
                             driver.back()
                             break
                         else:
@@ -375,11 +387,19 @@ def write_Post_address(address, full_address, driver, delay):
                     action = ActionChains(driver)
                     action.move_to_element(ulitca_input_button_inside)
                     action.double_click(on_element = ulitca_input_button_inside)
-                    action.perform()
-                    counter_clicks+=1
+                    flag_ex=False
+                    try:    
+                        action.perform()
+                        counter_clicks+=1
+                    except Exception:
+                        flag_ex=True
+                        counter_clicks=0
+                        pass
+                    
+                    
                     if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        if counter_clicks==0:
+                        if flag_ex==True:
                             driver.back()
                             break
                         else:
