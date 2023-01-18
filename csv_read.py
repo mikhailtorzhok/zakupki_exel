@@ -296,10 +296,11 @@ def write_Post_address(address, full_address, driver, delay):
                     action.move_to_element(region_input_button_inside)
                     #action.context_click(on_element = region_input_button_inside)
                     action.double_click(on_element = region_input_button_inside)
-                    flag_ex=False
+                    
                     try:    
                         action.perform()
                         counter_clicks+=1
+                        flag_ex=False
                     except Exception:
                         counter_clicks=0
                         flag_ex=True
@@ -346,10 +347,11 @@ def write_Post_address(address, full_address, driver, delay):
                     action = ActionChains(driver)
                     action.move_to_element(gorod_input_button_inside)
                     action.double_click(on_element = gorod_input_button_inside)
-                    flag_ex=False
+                    
                     try:    
                         action.perform()
                         counter_clicks+=1
+                        flag_ex=False
                     except Exception:
                         flag_ex=True
                         counter_clicks=0
@@ -382,15 +384,16 @@ def write_Post_address(address, full_address, driver, delay):
                 start_time = time.time()
                 counter_clicks=0
                 while(1):
-                    pass
+                    #pass
                     ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
                     action = ActionChains(driver)
                     action.move_to_element(ulitca_input_button_inside)
                     action.double_click(on_element = ulitca_input_button_inside)
-                    flag_ex=False
+                    
                     try:    
                         action.perform()
                         counter_clicks+=1
+                        flag_ex=False
                     except Exception:
                         flag_ex=True
                         counter_clicks=0
@@ -399,6 +402,9 @@ def write_Post_address(address, full_address, driver, delay):
                     
                     if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
+                        print("counter_clicks is " + str(counter_clicks))
+                        print("delta time is " + str(time.time() - start_time))
+                        print("flag_ex is " + str(flag_ex))
                         if flag_ex==True:
                             driver.back()
                             break
