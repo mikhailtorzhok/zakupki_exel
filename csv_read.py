@@ -81,7 +81,7 @@ def main():
     while True:
         #try:
 
-        read_from_csv_and_write_to_database_Ur(driver, delay, callback_func_with_timeout, 'Юридическое лицо_temp.csv')
+        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
 
         #except Exception as e:
             #print(e)
@@ -249,26 +249,22 @@ def press_button_OK(driver, delay):
 
 def write_Post_address(address, full_address, driver, delay):
     print('full_address is  ' + full_address)
-    #input_address = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/textarea')))
-    #input_address = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/textarea')))
-    #input_address.send_keys(full_address)
-    #input_address.send_keys(Keys.RETURN)
+
 
     address_list=address.split()
     time_before_for = time.time()
     for item in address_list:
-        #try:
+
             if item.find('Индекс') != -1 :
-                #print(item)
+
                 print("INSIDE INDEX")
                 index = item.partition('=')[2]
-                #print(index)
+
                 input_index = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input')))
                 input_index.send_keys(index)
                 input_index.send_keys(Keys.RETURN)
                 time.sleep(timedelay)
-                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/input
-                #find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[37]/span/input') 
+ 
             elif item.find('Регион') != -1 :
                 #pass
                 print("INSIDE REGION")
@@ -281,11 +277,7 @@ def write_Post_address(address, full_address, driver, delay):
                 region_input.send_keys(region)
                 region_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)            
-                
-                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]
-                #old_span/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/span/span
-                #Actions action = new Actions(driver).contextClick(region_input_button_inside).sendKeys(Keys.ARROW_UP).sendKeys(Keys.ENTER)
-                #action.build().perform()
+
                 
                 start_time = time.time()
                 counter_clicks=0
@@ -315,22 +307,11 @@ def write_Post_address(address, full_address, driver, delay):
                 
 
             elif item.find('Город') != -1 :
-                #pass
+          
                 print("INSIDE GOROD")
-                #if item.find('Регион') == -1 :
-                    #pass ## ERROR HERE
-                    #print("ERROR HERE")
-                    #region_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]')))
-                    #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[5]/div/div/div[2]
-                    #region_button_input.click()
-                    #time.sleep(timedelay)
-                    #driver.back()
-                    #time.sleep(timedelay)
+        
                 gorod = item.partition('=')[2]
                 gorod_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]')))
-                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
-                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[9]/div/div/div[2]
-                #/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]
                 gorod_button_input.click()
 
                 time.sleep(timedelay)
@@ -405,75 +386,26 @@ def write_Post_address(address, full_address, driver, delay):
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
-                        if flag_ex==True:
-                            driver.back()
-                            break
-                        else:
-                            break
+                        while(1):
+                            if (time.time() - start_time)>3: 
+                                if  counter_clicks==1:                           
+                                    driver.back()  
+                                    break
+                                else:
+                                    pass                       
+                            else:
+                                pass
 
-                #try:
-                    #ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
-                #except TimeoutException as ex:
-                    #isrunning = 0
-                    #print("Exception has been thrown. " + str(ex))
-                    #driver.back()
-                    #print(e)
-                    #driver.back()
-                    #/html/body/div[3]/div[1]/div/div/div[1]/div
-                #action = ActionChains(driver)
-                #action.move_to_element(ulitca_input_button_inside)
-                #action.double_click(on_element = ulitca_input_button_inside)
-                #action.perform()
+            
             else:               
                 pass
                 if (time.time() - time_before_for)>20:
                         print("We are waiting for 20 sec")
                         return
-                        #break
-        #except Exception:
-            #pass  # or you could use 'continue'
-            #print('before continue')
-            #driver.back()
-            #continue
-            #print('after continue')
-            
-
-    return
-
-def callback_func_with_timeout(row, driver, delay):
-    with stopit.ThreadingTimeout(5) as to_ctx_mgr:
-            assert to_ctx_mgr.state == to_ctx_mgr.EXECUTING
-            # Something potentially very long but which
-            # ...
-            print('Something potentially very long but which')
-            write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
-
-            # OK, let's check what happened
-            if to_ctx_mgr.state == to_ctx_mgr.EXECUTED:
-                # All's fine, everything was executed within 10 seconds
-                print('All is fine, everything was executed within 5 seconds')
-                #pass
-            elif to_ctx_mgr.state == to_ctx_mgr.EXECUTING:
-                # Hmm, that's not possible outside the block
-                print('Hmm, that is not possible outside the block')
-            elif to_ctx_mgr.state == to_ctx_mgr.TIMED_OUT:
-                # Eeek the 5 seconds timeout occurred while executing the block
-                print('Eeek the 5 seconds timeout occurred while executing the block')
-                driver.back()
-            elif to_ctx_mgr.state == to_ctx_mgr.INTERRUPTED:
-                # Oh you raised specifically the TimeoutException in the block
-                print('Oh you raised specifically the TimeoutException in the block')
-            elif to_ctx_mgr.state == to_ctx_mgr.CANCELED:
-                # Oh you called to_ctx_mgr.cancel() method within the block but it
-                # executed till the end
-                print('Oh you called to_ctx_mgr.cancel() method within the block but it executed till the end')
-            else:
-                # That's not possible
-                print('That is not possible')
     return
 
 
-def  read_from_csv_and_write_to_database_Ur(driver, delay, callback, filename='Юридическое лицо.csv'):
+def  read_from_csv_and_write_to_database_Ur(driver, delay, callback, filename='Юридическое лицо_temp.csv'):
     with open(filename, encoding='utf-8') as f:
         #Ur_list = []
         #Fiz_list = []
@@ -529,10 +461,7 @@ def  read_from_csv_and_write_to_database_Ur(driver, delay, callback, filename='�
                 #print("Exception has been thrown. " + str(ex))
                 #driver.back()
                 #print(e)
-                #driver.back()
-
-
-            #callback_func_with_timeout(row, driver, delay)
+                #driver.back()         
 
             #try:
             #write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
