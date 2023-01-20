@@ -388,7 +388,7 @@ def write_Post_address(address, full_address, driver, delay):
                             flag_exx=True
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  not flag_exx and flag_ex:                           
+                                if  not flag_exx or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
@@ -525,7 +525,7 @@ def write_Post_address(address, full_address, driver, delay):
                             flag_exx=True
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  not flag_exx and flag_ex:                           
+                                if  not flag_exx or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
@@ -592,7 +592,7 @@ def write_Post_address(address, full_address, driver, delay):
                             flag_exx=True
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  not flag_exx  and flag_ex:                           
+                                if  not flag_exx  or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
