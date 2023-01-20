@@ -543,9 +543,8 @@ def write_Post_address(address, full_address, driver, delay):
                 print("INSIDE Kvartira")
                 kvartira = item.partition('=')[2]
     
-                kvartira_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[21]/div/div/div[2]')))
-                                                                                                                
-
+                kvartira_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/div/div[2]')))
+                                                                                                                                                                                                                      
                 kvartira_button_input.click()
 
                 time.sleep(timedelay)
