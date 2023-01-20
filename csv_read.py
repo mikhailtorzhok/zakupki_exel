@@ -81,7 +81,7 @@ def main():
     while True:
         #try:
 
-        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp_temp.csv')
+        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
 
         #except Exception as e:
             #print(e)
@@ -641,7 +641,10 @@ def  read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юриди�
             time.sleep(timedelay)
             write_fullname_Ur(row['ПолноеНаименование'],driver, delay)
             time.sleep(timedelay)
-            write_place_of_creating('Тверская область',driver, delay)
+            try:
+                write_place_of_creating('Тверская область',driver, delay)
+            except:
+                continue
             time.sleep(timedelay)
             write_telephone_Ur(row['ЭлементНомерТелефонаБезКодов'],driver, delay)
             time.sleep(timedelay)
@@ -668,6 +671,10 @@ def  read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юриди�
 
             print('Something potentially very long but which')
             write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+
+            #copy post address
+            find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[21]/div/div[2]/div/div/div/div[1]/div/div/div[1]/div')  
+            
 
 
             #except TimeoutException as ex:
