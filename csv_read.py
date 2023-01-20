@@ -81,7 +81,7 @@ def main():
     while True:
         #try:
 
-        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp.csv')
+        read_from_csv_and_write_to_database_Ur(driver, delay, 'Юридическое лицо_temp_temp.csv')
 
         #except Exception as e:
             #print(e)
@@ -341,10 +341,12 @@ def write_Post_address(address, full_address, driver, delay):
             elif item.find('Город') != -1 :
           
                 print("INSIDE GOROD")
-        
-                gorod = item.partition('=')[2]
-                gorod_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]')))
-                gorod_button_input.click()
+                try:
+                    gorod = item.partition('=')[2]
+                    gorod_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[10]/div/div/div[2]')))
+                    gorod_button_input.click()
+                except:
+                    continue
 
                 time.sleep(timedelay)
                 gorod_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
@@ -404,11 +406,12 @@ def write_Post_address(address, full_address, driver, delay):
             elif item.find('Улица') != -1 :
                 #pass
                 print("INSIDE Ulitca")
-                ulitca = item.partition('=')[2]
-    
-                ulitca_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[13]/div/div/div[2]')))
-
-                ulitca_button_input.click()
+                try:
+                    ulitca = item.partition('=')[2]
+                    ulitca_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[13]/div/div/div[2]')))
+                    ulitca_button_input.click()
+                except:
+                    continue
 
                 time.sleep(timedelay)
                 ulitca_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
@@ -477,12 +480,12 @@ def write_Post_address(address, full_address, driver, delay):
                 
                 #pass
                 print("INSIDE Dom")
-                dom = item.partition('=')[2]
-    
-                dom_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[17]/div/div/div[2]')))
-                                                                                                                
-
-                dom_button_input.click()
+                try:
+                    dom = item.partition('=')[2]    
+                    dom_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[17]/div/div/div[2]'))) 
+                    dom_button_input.click()
+                except:
+                    continue
 
                 time.sleep(timedelay)
                 dom_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
@@ -543,11 +546,12 @@ def write_Post_address(address, full_address, driver, delay):
             elif item.find('Квартира') != -1 :
                 #pass
                 print("INSIDE Kvartira")
-                kvartira = item.partition('=')[2]
-    
-                kvartira_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/div/div[2]')))
-                                                                                                                                                                                                                      
-                kvartira_button_input.click()
+                try:
+                    kvartira = item.partition('=')[2]
+                    kvartira_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[19]/div/div/div[2]')))                                                                                                                                                                                                           
+                    kvartira_button_input.click()
+                except:
+                    continue
 
                 time.sleep(timedelay)
                 kvartira_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
@@ -615,7 +619,7 @@ def write_Post_address(address, full_address, driver, delay):
     return
 
 
-def  read_from_csv_and_write_to_database_Ur(driver, delay, callback, filename='Юридическое лицо_temp.csv'):
+def  read_from_csv_and_write_to_database_Ur(driver, delay, filename='Юридическое лицо_temp.csv'):
     with open(filename, encoding='utf-8') as f:
         #Ur_list = []
         #Fiz_list = []
