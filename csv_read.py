@@ -364,8 +364,13 @@ def write_Post_address(address, full_address, driver, delay):
 
                 start_time = time.time()
                 counter_clicks=0
+                wantToBreak = False
                 while(1):
                     #pass
+                    if wantToBreak:
+                        break
+                    
+                    print('inside Ulitsa while')
                     ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
                     action = ActionChains(driver)
                     action.move_to_element(ulitca_input_button_inside)
@@ -392,9 +397,14 @@ def write_Post_address(address, full_address, driver, delay):
                                     driver.back()  
                                     break
                                 else:
+                                    print('inside Ulitsa while else pass')
+                                    if (time.time() - start_time)>10:
+                                        wantToBreak = True
+                                        break
                                     pass                       
                             else:
                                 pass
+                    
 
             
             else:               
