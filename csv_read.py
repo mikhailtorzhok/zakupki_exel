@@ -308,12 +308,12 @@ def write_Post_address(address, full_address, driver, delay):
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1:                           
+                                if  counter_clicks==1 and flag_ex:                           
                                     driver.back()  
                                     break
                                 else:
-                                    print('inside Ulitsa while else pass')
-                                    if (time.time() - start_time)>10:
+                                    print('inside REGION while else pass')
+                                    if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
                                     pass                       
@@ -365,12 +365,12 @@ def write_Post_address(address, full_address, driver, delay):
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1:                           
+                                if  counter_clicks==1 and flag_ex:                          
                                     driver.back()  
                                     break
                                 else:
-                                    print('inside Ulitsa while else pass')
-                                    if (time.time() - start_time)>10:
+                                    print('inside GOROD while else pass')
+                                    if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
                                     pass                       
@@ -425,12 +425,12 @@ def write_Post_address(address, full_address, driver, delay):
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1:                           
+                                if  counter_clicks==1 and flag_ex:                           
                                     driver.back()  
                                     break
                                 else:
                                     print('inside Ulitsa while else pass')
-                                    if (time.time() - start_time)>10:
+                                    if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
                                     pass                       
@@ -485,20 +485,20 @@ def write_Post_address(address, full_address, driver, delay):
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
                         while(1):
-                            if (time.time() - start_time)>3: 
+                            if (time.time() - start_time)>3 and flag_ex:  
                                 if  counter_clicks==1:                           
                                     driver.back()  
                                     break
                                 else:
                                     print('inside Dom while else pass')
-                                    if (time.time() - start_time)>10:
+                                    if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
                                     pass                       
                             else:
                                 pass
 
-             elif item.find('Квартира') != -1 :
+            elif item.find('Квартира') != -1 :
                 #pass
                 print("INSIDE Kvartira")
                 kvartira = item.partition('=')[2]
@@ -547,12 +547,12 @@ def write_Post_address(address, full_address, driver, delay):
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1:                           
+                                if  counter_clicks==1 and flag_ex:                            
                                     driver.back()  
                                     break
                                 else:
                                     print('inside Kvartira while else pass')
-                                    if (time.time() - start_time)>10:
+                                    if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
                                     pass                       
