@@ -277,23 +277,22 @@ def write_Post_address(address, full_address, driver, delay):
                 region_input.send_keys(region)
                 region_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)            
-
+   
+                region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
+                action = ActionChains(driver)
+                action.move_to_element(region_input_button_inside)
+                #action.context_click(on_element = region_input_button_inside)
+                action.double_click(on_element = region_input_button_inside)
                 
                 start_time = time.time()
                 counter_clicks=0
                 wantToBreak = False
                 while(1):
-                    #pass
                     if wantToBreak:
                         break
-                    region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
-                    action = ActionChains(driver)
-                    action.move_to_element(region_input_button_inside)
-                    #action.context_click(on_element = region_input_button_inside)
-                    action.double_click(on_element = region_input_button_inside)
-                    
                     try:    
-                        action.perform()
+                        result=action.perform()
+                        print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -301,15 +300,16 @@ def write_Post_address(address, full_address, driver, delay):
                         flag_ex=True
                         pass
 
-                    if (time.time() - start_time)>3 or counter_clicks>0:
+                    if (time.time() - start_time)>3:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1 and flag_ex:                           
-                                    driver.back()  
+                                if  counter_clicks>2 and flag_ex:                           
+                                    driver.back() 
+                                    wantToBreak = True
                                     break
                                 else:
                                     print('inside REGION while else pass')
@@ -335,21 +335,22 @@ def write_Post_address(address, full_address, driver, delay):
                 gorod_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)            
                 
+   
+                gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
+                action = ActionChains(driver)
+                action.move_to_element(gorod_input_button_inside)
+                action.double_click(on_element = gorod_input_button_inside)
+
                 start_time = time.time()
                 counter_clicks=0
                 wantToBreak = False
-                
                 while(1):
                     #pass
                     if wantToBreak:
                         break
-                    gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
-                    action = ActionChains(driver)
-                    action.move_to_element(gorod_input_button_inside)
-                    action.double_click(on_element = gorod_input_button_inside)
-                    
                     try:    
-                        action.perform()
+                        result=action.perform()
+                        print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -358,24 +359,25 @@ def write_Post_address(address, full_address, driver, delay):
                         pass
 
 
-                    if (time.time() - start_time)>3 or counter_clicks>0:
+                    if (time.time() - start_time)>3:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1 and flag_ex:                          
-                                    driver.back()  
+                                if  counter_clicks>2 and flag_ex:                           
+                                    driver.back() 
+                                    wantToBreak = True
                                     break
                                 else:
-                                    print('inside GOROD while else pass')
+                                    print('inside Ulitsa while else pass')
                                     if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
                                     pass                       
                             else:
-                                pass    
+                                pass
 
             elif item.find('Улица') != -1 :
                 #pass
@@ -392,24 +394,29 @@ def write_Post_address(address, full_address, driver, delay):
                 ulitca_input.send_keys(ulitca)
                 ulitca_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)
-                #driver.back()
+               
 
+               
+              
+                    
+                    
+                #print('inside Ulitsa while')
+                ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
+                action = ActionChains(driver)
+                action.move_to_element(ulitca_input_button_inside)
+                action.double_click(on_element = ulitca_input_button_inside)
+                
                 start_time = time.time()
                 counter_clicks=0
                 wantToBreak = False
+                
                 while(1):
                     #pass
                     if wantToBreak:
                         break
-                    
-                    print('inside Ulitsa while')
-                    ulitca_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
-                    action = ActionChains(driver)
-                    action.move_to_element(ulitca_input_button_inside)
-                    action.double_click(on_element = ulitca_input_button_inside)
-                    
                     try:    
-                        action.perform()
+                        result = action.perform()
+                        print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -418,15 +425,16 @@ def write_Post_address(address, full_address, driver, delay):
                         pass
                     
                     
-                    if (time.time() - start_time)>3 or counter_clicks>0:
+                    if (time.time() - start_time)>3:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1 and flag_ex:                           
-                                    driver.back()  
+                                if  counter_clicks>2 and flag_ex:                           
+                                    driver.back() 
+                                    wantToBreak = True
                                     break
                                 else:
                                     print('inside Ulitsa while else pass')
@@ -453,7 +461,13 @@ def write_Post_address(address, full_address, driver, delay):
                 dom_input.send_keys(dom)
                 dom_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)
-                #driver.back()
+             
+        
+                #print('inside Dom while')
+                dom_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]'))) 
+                action = ActionChains(driver)
+                action.move_to_element(dom_input_button_inside)
+                action.double_click(on_element = dom_input_button_inside)
 
                 start_time = time.time()
                 counter_clicks=0
@@ -462,15 +476,9 @@ def write_Post_address(address, full_address, driver, delay):
                     #pass
                     if wantToBreak:
                         break
-                    
-                    print('inside Dom while')
-                    dom_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]'))) 
-                    action = ActionChains(driver)
-                    action.move_to_element(dom_input_button_inside)
-                    action.double_click(on_element = dom_input_button_inside)
-                    
                     try:    
-                        action.perform()
+                        result=action.perform()
+                        print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -478,19 +486,19 @@ def write_Post_address(address, full_address, driver, delay):
                         counter_clicks=0
                         pass
                     
-                    
-                    if (time.time() - start_time)>3 or counter_clicks>0:
+                    if (time.time() - start_time)>3:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
                         while(1):
-                            if (time.time() - start_time)>3 and flag_ex:  
-                                if  counter_clicks==1:                           
-                                    driver.back()  
+                            if (time.time() - start_time)>3: 
+                                if  counter_clicks>2 and flag_ex:                           
+                                    driver.back() 
+                                    wantToBreak = True
                                     break
                                 else:
-                                    print('inside Dom while else pass')
+                                    print('inside Ulitsa while else pass')
                                     if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
@@ -514,24 +522,24 @@ def write_Post_address(address, full_address, driver, delay):
                 kvartira_input.send_keys(kvartira)
                 kvartira_input.send_keys(Keys.RETURN)
                 time.sleep(timedelay)
-                
 
+                    
+                #print('inside Kvartira while')
+                kvartira_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]'))) 
+                action = ActionChains(driver)
+                action.move_to_element(kvartira_input_button_inside)
+                action.double_click(on_element = kvartira_input_button_inside)
+                
                 start_time = time.time()
                 counter_clicks=0
                 wantToBreak = False
                 while(1):
                     #pass
                     if wantToBreak:
-                        break
-                    
-                    print('inside Kvartira while')
-                    kvartira_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]'))) 
-                    action = ActionChains(driver)
-                    action.move_to_element(kvartira_input_button_inside)
-                    action.double_click(on_element = kvartira_input_button_inside)
-                    
+                        break  
                     try:    
-                        action.perform()
+                        result=action.perform()
+                        print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -540,18 +548,19 @@ def write_Post_address(address, full_address, driver, delay):
                         pass
                     
                     
-                    if (time.time() - start_time)>3 or counter_clicks>0:
+                    if (time.time() - start_time)>3:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks==1 and flag_ex:                            
-                                    driver.back()  
+                                if  counter_clicks>2 and flag_ex:                           
+                                    driver.back() 
+                                    wantToBreak = True
                                     break
                                 else:
-                                    print('inside Kvartira while else pass')
+                                    print('inside Ulitsa while else pass')
                                     if (time.time() - start_time)>3:
                                         wantToBreak = True
                                         break
