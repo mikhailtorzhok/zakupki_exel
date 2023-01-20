@@ -436,7 +436,128 @@ def write_Post_address(address, full_address, driver, delay):
                                     pass                       
                             else:
                                 pass
+
+            elif item.find('Дом') != -1 :
+                #pass
+                print("INSIDE Dom")
+                dom = item.partition('=')[2]
+    
+                dom_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[17]/div/div/div[2]')))
+                                                                                                                
+
+                dom_button_input.click()
+
+                time.sleep(timedelay)
+                dom_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
+
+                dom_input.send_keys(dom)
+                dom_input.send_keys(Keys.RETURN)
+                time.sleep(timedelay)
+                #driver.back()
+
+                start_time = time.time()
+                counter_clicks=0
+                wantToBreak = False
+                while(1):
+                    #pass
+                    if wantToBreak:
+                        break
                     
+                    print('inside Dom while')
+                    dom_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]'))) 
+                    action = ActionChains(driver)
+                    action.move_to_element(dom_input_button_inside)
+                    action.double_click(on_element = dom_input_button_inside)
+                    
+                    try:    
+                        action.perform()
+                        counter_clicks+=1
+                        flag_ex=False
+                    except Exception:
+                        flag_ex=True
+                        counter_clicks=0
+                        pass
+                    
+                    
+                    if (time.time() - start_time)>3 or counter_clicks>0:
+                        print("We are waiting for 3 sec")
+                        print("counter_clicks is " + str(counter_clicks))
+                        print("delta time is " + str(time.time() - start_time))
+                        print("flag_ex is " + str(flag_ex))
+                        while(1):
+                            if (time.time() - start_time)>3: 
+                                if  counter_clicks==1:                           
+                                    driver.back()  
+                                    break
+                                else:
+                                    print('inside Dom while else pass')
+                                    if (time.time() - start_time)>10:
+                                        wantToBreak = True
+                                        break
+                                    pass                       
+                            else:
+                                pass
+
+             elif item.find('Квартира') != -1 :
+                #pass
+                print("INSIDE Kvartira")
+                kvartira = item.partition('=')[2]
+    
+                kvartira_button_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div[21]/div/div/div[2]')))
+                                                                                                                
+
+                kvartira_button_input.click()
+
+                time.sleep(timedelay)
+                kvartira_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[1]/div/div[3]/input'))) 
+
+                kvartira_input.send_keys(kvartira)
+                kvartira_input.send_keys(Keys.RETURN)
+                time.sleep(timedelay)
+                
+
+                start_time = time.time()
+                counter_clicks=0
+                wantToBreak = False
+                while(1):
+                    #pass
+                    if wantToBreak:
+                        break
+                    
+                    print('inside Kvartira while')
+                    kvartira_input_button_inside = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]'))) 
+                    action = ActionChains(driver)
+                    action.move_to_element(kvartira_input_button_inside)
+                    action.double_click(on_element = kvartira_input_button_inside)
+                    
+                    try:    
+                        action.perform()
+                        counter_clicks+=1
+                        flag_ex=False
+                    except Exception:
+                        flag_ex=True
+                        counter_clicks=0
+                        pass
+                    
+                    
+                    if (time.time() - start_time)>3 or counter_clicks>0:
+                        print("We are waiting for 3 sec")
+                        print("counter_clicks is " + str(counter_clicks))
+                        print("delta time is " + str(time.time() - start_time))
+                        print("flag_ex is " + str(flag_ex))
+                        while(1):
+                            if (time.time() - start_time)>3: 
+                                if  counter_clicks==1:                           
+                                    driver.back()  
+                                    break
+                                else:
+                                    print('inside Kvartira while else pass')
+                                    if (time.time() - start_time)>10:
+                                        wantToBreak = True
+                                        break
+                                    pass                       
+                            else:
+                                pass
 
             
             else:               
