@@ -287,6 +287,14 @@ def write_Post_address(address, full_address, driver, delay):
                 start_time = time.time()
                 counter_clicks=0
                 wantToBreak = False
+                #try:
+                    #flag_exx=False
+                    #element = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]') 
+                #except Exception:
+                    #flag_exx=True
+
+                #print('element is BEFORE WHILE' + str(flag_exx))
+                #time.sleep(2)
                 while(1):
                     if wantToBreak:
                         break
@@ -299,15 +307,24 @@ def write_Post_address(address, full_address, driver, delay):
                         counter_clicks=0
                         flag_ex=True
                         pass
-
+ 
+                    
                     if (time.time() - start_time)>3:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
+                        try:
+                            flag_exx=False
+                            element = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]') 
+                        except Exception:
+                            flag_exx=True
+
+                        print('flag_exx is ' + str(flag_exx))
                         while(1):
-                            if (time.time() - start_time)>3: 
-                                if  counter_clicks>2 and flag_ex:                           
+                            if (time.time() - start_time)>3:  
+                                print('flag_exx is ' + str(flag_exx))
+                                if  not flag_exx or flag_ex:                          
                                     driver.back() 
                                     wantToBreak = True
                                     break
@@ -364,9 +381,14 @@ def write_Post_address(address, full_address, driver, delay):
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
+                        try:
+                            flag_exx=False
+                            element = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]') 
+                        except Exception:
+                            flag_exx=True
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks>2 and flag_ex:                           
+                                if  not flag_exx and flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
@@ -430,9 +452,14 @@ def write_Post_address(address, full_address, driver, delay):
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
+                        try:
+                            flag_exx=False
+                            element = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]') 
+                        except Exception:
+                            flag_exx=True
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks>2 and flag_ex:                           
+                                if  not flag_exx or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
@@ -491,9 +518,14 @@ def write_Post_address(address, full_address, driver, delay):
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
+                        try:
+                            flag_exx=False
+                            element = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]') 
+                        except Exception:
+                            flag_exx=True
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks>2 and flag_ex:                           
+                                if  not flag_exx and flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
@@ -553,9 +585,14 @@ def write_Post_address(address, full_address, driver, delay):
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
                         print("flag_ex is " + str(flag_ex))
+                        try:
+                            flag_exx=False
+                            element = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[1]') 
+                        except Exception:
+                            flag_exx=True
                         while(1):
                             if (time.time() - start_time)>3: 
-                                if  counter_clicks>2 and flag_ex:                           
+                                if  not flag_exx  and flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
