@@ -472,7 +472,9 @@ def write_Post_address(address, full_address, driver, delay):
                             else:
                                 pass
 
-            elif item.find('Дом') != -1 :
+            #elif item.find('Дом') != -1 :
+            elif item.partition('=')[1].find('Дом') != -1 :
+                
                 #pass
                 print("INSIDE Dom")
                 dom = item.partition('=')[2]
