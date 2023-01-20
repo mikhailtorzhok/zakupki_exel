@@ -281,8 +281,11 @@ def write_Post_address(address, full_address, driver, delay):
                 
                 start_time = time.time()
                 counter_clicks=0
+                wantToBreak = False
                 while(1):
-                    pass
+                    #pass
+                    if wantToBreak:
+                        break
                     region_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]'))) 
                     action = ActionChains(driver)
                     action.move_to_element(region_input_button_inside)
@@ -297,14 +300,26 @@ def write_Post_address(address, full_address, driver, delay):
                         counter_clicks=0
                         flag_ex=True
                         pass
+
                     if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        if flag_ex==True:
-                            driver.back()
-                            break
-                        else:
-                            break
-                
+                        print("counter_clicks is " + str(counter_clicks))
+                        print("delta time is " + str(time.time() - start_time))
+                        print("flag_ex is " + str(flag_ex))
+                        while(1):
+                            if (time.time() - start_time)>3: 
+                                if  counter_clicks==1:                           
+                                    driver.back()  
+                                    break
+                                else:
+                                    print('inside Ulitsa while else pass')
+                                    if (time.time() - start_time)>10:
+                                        wantToBreak = True
+                                        break
+                                    pass                       
+                            else:
+                                pass
+             
 
             elif item.find('Город') != -1 :
           
@@ -322,8 +337,12 @@ def write_Post_address(address, full_address, driver, delay):
                 
                 start_time = time.time()
                 counter_clicks=0
+                wantToBreak = False
+                
                 while(1):
-                    pass
+                    #pass
+                    if wantToBreak:
+                        break
                     gorod_input_button_inside = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div/div/div/div/div[3]/div/div/div[2]/div[1]/div[1]'))) 
                     action = ActionChains(driver)
                     action.move_to_element(gorod_input_button_inside)
@@ -337,13 +356,26 @@ def write_Post_address(address, full_address, driver, delay):
                         flag_ex=True
                         counter_clicks=0
                         pass
+
+
                     if (time.time() - start_time)>3 or counter_clicks>0:
                         print("We are waiting for 3 sec")
-                        if flag_ex==True:
-                            driver.back()
-                            break
-                        else:
-                            break
+                        print("counter_clicks is " + str(counter_clicks))
+                        print("delta time is " + str(time.time() - start_time))
+                        print("flag_ex is " + str(flag_ex))
+                        while(1):
+                            if (time.time() - start_time)>3: 
+                                if  counter_clicks==1:                           
+                                    driver.back()  
+                                    break
+                                else:
+                                    print('inside Ulitsa while else pass')
+                                    if (time.time() - start_time)>10:
+                                        wantToBreak = True
+                                        break
+                                    pass                       
+                            else:
+                                pass    
 
             elif item.find('Улица') != -1 :
                 #pass
