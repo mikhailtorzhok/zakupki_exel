@@ -620,7 +620,7 @@ def write_Post_address(address, full_address, driver, delay):
 
 
 def  read_from_csv_and_write_to_database_Ur(driver, delay, filename='csv_write_Ur_utf8.csv'):
-    with open(filename, encoding='windows-1251') as f:
+    with open(filename, encoding='utf-8') as f:
         #Ur_list = []
         #Fiz_list = []
         #Trash_list = []
