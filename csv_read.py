@@ -14,6 +14,7 @@ import time
 import signal
 import stopit
 
+time606 = 1
 timedelay=0.3
 Ur_list = []
 Fiz_list = []
@@ -309,7 +310,7 @@ def write_Post_address(address, full_address, driver, delay):
                         pass
  
                     
-                    if (time.time() - start_time)>3:
+                    if (time.time() - start_time)>time606:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
@@ -322,7 +323,7 @@ def write_Post_address(address, full_address, driver, delay):
 
                         print('flag_exx is ' + str(flag_exx))
                         while(1):
-                            if (time.time() - start_time)>3:  
+                            if (time.time() - start_time)>time606:  
                                 print('flag_exx is ' + str(flag_exx))
                                 if  not flag_exx or flag_ex:                          
                                     driver.back() 
@@ -330,7 +331,7 @@ def write_Post_address(address, full_address, driver, delay):
                                     break
                                 else:
                                     print('inside REGION while else pass')
-                                    if (time.time() - start_time)>3:
+                                    if (time.time() - start_time)>time606:
                                         wantToBreak = True
                                         break
                                     pass                       
@@ -378,7 +379,7 @@ def write_Post_address(address, full_address, driver, delay):
                         pass
 
 
-                    if (time.time() - start_time)>3:
+                    if (time.time() - start_time)>time606:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
@@ -389,14 +390,14 @@ def write_Post_address(address, full_address, driver, delay):
                         except Exception:
                             flag_exx=True
                         while(1):
-                            if (time.time() - start_time)>3: 
+                            if (time.time() - start_time)>time606: 
                                 if  not flag_exx or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
                                 else:
                                     print('inside Ulitsa while else pass')
-                                    if (time.time() - start_time)>3:
+                                    if (time.time() - start_time)>time606:
                                         wantToBreak = True
                                         break
                                     pass                       
@@ -450,7 +451,7 @@ def write_Post_address(address, full_address, driver, delay):
                         pass
                     
                     
-                    if (time.time() - start_time)>3:
+                    if (time.time() - start_time)>time606:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
@@ -461,14 +462,14 @@ def write_Post_address(address, full_address, driver, delay):
                         except Exception:
                             flag_exx=True
                         while(1):
-                            if (time.time() - start_time)>3: 
+                            if (time.time() - start_time)>time606: 
                                 if  not flag_exx or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
                                 else:
                                     print('inside Ulitsa while else pass')
-                                    if (time.time() - start_time)>3:
+                                    if (time.time() - start_time)>time606:
                                         wantToBreak = True
                                         break
                                     pass                       
@@ -518,7 +519,7 @@ def write_Post_address(address, full_address, driver, delay):
                         counter_clicks=0
                         pass
                     
-                    if (time.time() - start_time)>3:
+                    if (time.time() - start_time)>time606:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
@@ -529,14 +530,14 @@ def write_Post_address(address, full_address, driver, delay):
                         except Exception:
                             flag_exx=True
                         while(1):
-                            if (time.time() - start_time)>3: 
+                            if (time.time() - start_time)>time606: 
                                 if  not flag_exx or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
                                 else:
                                     print('inside Ulitsa while else pass')
-                                    if (time.time() - start_time)>3:
+                                    if (time.time() - start_time)>time606:
                                         wantToBreak = True
                                         break
                                     pass                       
@@ -585,7 +586,7 @@ def write_Post_address(address, full_address, driver, delay):
                         pass
                     
                     
-                    if (time.time() - start_time)>3:
+                    if (time.time() - start_time)>time606:
                         print("We are waiting for 3 sec")
                         print("counter_clicks is " + str(counter_clicks))
                         print("delta time is " + str(time.time() - start_time))
@@ -596,14 +597,14 @@ def write_Post_address(address, full_address, driver, delay):
                         except Exception:
                             flag_exx=True
                         while(1):
-                            if (time.time() - start_time)>3: 
+                            if (time.time() - start_time)>time606: 
                                 if  not flag_exx  or flag_ex:                           
                                     driver.back() 
                                     wantToBreak = True
                                     break
                                 else:
                                     print('inside Ulitsa while else pass')
-                                    if (time.time() - start_time)>3:
+                                    if (time.time() - start_time)>time606:
                                         wantToBreak = True
                                         break
                                     pass                       
