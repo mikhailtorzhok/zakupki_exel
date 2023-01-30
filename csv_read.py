@@ -1,4 +1,6 @@
 import csv
+import sys
+import os
 import config
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -13,16 +15,16 @@ from selenium.webdriver.common.keys import Keys
 import time 
 import signal
 import stopit
+import pandas as pd
 
-time606 = 1
-timedelay=0.3
+timedelay=0.2
 Ur_list = []
 Fiz_list = []
 Trash_list = []
 Ur_dictionary = {}
 Fiz_dictionary = {}
 Trash_dictionary = {}
-
+time606=3
 
 def main():
     print("Hello World!")
@@ -34,7 +36,7 @@ def main():
     driver.get("https://torsed.voskhod.ru/app/#!")
 
     
-    delay = 15 # seconds
+    delay = 5 # seconds
     
     login_input = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input')))
     print ("Page is ready!")
@@ -45,6 +47,8 @@ def main():
             
     button_login = driver.find_element(By.XPATH, '//div[@class="v-button v-widget cuba-login-submit v-button-cuba-login-submit v-has-width"]')
     button_login.click()
+
+    #os.execv(sys.executable, ['python3'] + ['/home/mixxxxx/Documents/zakupki_exel/csv_read.py'])
     
     button_spravochniki = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//*[text()="Справочники"]')))
     button_spravochniki = driver.find_element(By.CSS_SELECTOR, "span[class='v-menubar-menuitem']")
@@ -246,7 +250,7 @@ def write_Pokupatel(pokupatel, driver, delay):
 
 def press_button_OK(driver, delay):
     find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[3]/div/div/div/div[1]/div/span/span')
-    return
+    return                                      
 
 def write_Post_address(address, full_address, driver, delay):
     print('full_address is  ' + full_address)
@@ -301,7 +305,7 @@ def write_Post_address(address, full_address, driver, delay):
                         break
                     try:    
                         result=action.perform()
-                        print('result is ' + str(result))
+                        #print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -370,7 +374,7 @@ def write_Post_address(address, full_address, driver, delay):
                         break
                     try:    
                         result=action.perform()
-                        print('result is ' + str(result))
+                        #print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -442,7 +446,7 @@ def write_Post_address(address, full_address, driver, delay):
                         break
                     try:    
                         result = action.perform()
-                        print('result is ' + str(result))
+                        #print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -511,7 +515,7 @@ def write_Post_address(address, full_address, driver, delay):
                         break
                     try:    
                         result=action.perform()
-                        print('result is ' + str(result))
+                        #print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -577,7 +581,7 @@ def write_Post_address(address, full_address, driver, delay):
                         break  
                     try:    
                         result=action.perform()
-                        print('result is ' + str(result))
+                        #print('result is ' + str(result))
                         counter_clicks+=1
                         flag_ex=False
                     except Exception:
@@ -616,7 +620,9 @@ def write_Post_address(address, full_address, driver, delay):
                 pass
                 if (time.time() - time_before_for)>20:
                         print("We are waiting for 20 sec")
-                        return
+                        #return
+                        raise Exception
+                        #sys.exit()
     return
 
 
@@ -627,86 +633,105 @@ def  read_from_csv_and_write_to_database_Ur(driver, delay, filename='csv_write_U
         #Trash_list = []
         reader = csv.DictReader(f)
         i=0
-        for row in reader:
-            print(row)
-            #button_create_new
-            find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div/div[3]/div/div[1]/div/div[1]/div/div[1]/div')
-            time.sleep(timedelay)
-            i+=1
-            #if i == 1:
-                #continue
-            #print(row['Ссылка'])
-            
-            
-            write_name_Ur(row['Ссылка'],driver, delay)
-            time.sleep(timedelay)
-            write_fullname_Ur(row['ПолноеНаименование'],driver, delay)
-            time.sleep(timedelay)
-            try:
+        before_failed_list = []
+        try:
+            for row in reader:
+                print(row)
+                Ur_temp = row['ПолноеНаименование']
+                before_failed_list.append(Ur_temp)
+                #button_create_new
+                find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div/div[3]/div/div[1]/div/div[1]/div/div[1]/div')
+                time.sleep(timedelay)
+                i+=1
+                #if i == 1:
+                    #continue
+                #print(row['Ссылка'])
+                
+                
+                write_name_Ur(row['Ссылка'],driver, delay)
+                time.sleep(timedelay)
+                write_fullname_Ur(row['ПолноеНаименование'],driver, delay)
+                time.sleep(timedelay)
+                #try:
                 write_place_of_creating('Тверская область',driver, delay)
-            except:
-                continue
-            time.sleep(timedelay)
-            write_telephone_Ur(row['ЭлементНомерТелефонаБезКодов'],driver, delay)
-            time.sleep(timedelay)
-            write_fax_Ur(row['ЭлементНомерТелефона'],driver, delay)
-            time.sleep(timedelay)
-            write_E_mail_Ur(row['ЭлементДоменноеИмяСервера'],driver, delay)
-            time.sleep(timedelay)
-            #write_site_Ur(row['Сайт'],driver, delay)
-            #time.sleep(timedelay)
-            write_INN_Ur(row['ИНН'],driver, delay)
-            time.sleep(timedelay)
-            write_KPP_Ur(row['КПП'],driver, delay)
-            time.sleep(timedelay)
-            #write_OGRN_Ur(row['ОГРН'],driver, delay)
-            #time.sleep(timedelay)
-            #write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
-            #time.sleep(timedelay)
+                #except:
+                    #continue
+                time.sleep(timedelay)
+                print('write_place_of_creating is Тверская область')
+                write_telephone_Ur(row['ЭлементНомерТелефонаБезКодов'],driver, delay)
+                print('ЭлементНомерТелефонаБезКодов')
+                time.sleep(timedelay)
+                write_fax_Ur(row['ЭлементНомерТелефона'],driver, delay)
+                print('ЭлементНомерТелефона')
+                time.sleep(timedelay)
+                write_E_mail_Ur(row['ЭлементДоменноеИмяСервера'],driver, delay)
+                print('ЭлементДоменноеИмяСервера')
+                time.sleep(timedelay)
+                #write_site_Ur(row['Сайт'],driver, delay)
+                #time.sleep(timedelay)
+                write_INN_Ur(row['ИНН'],driver, delay)
+                print('ИНН')
+                time.sleep(timedelay)
+                write_KPP_Ur(row['КПП'],driver, delay)
+                print('КПП')
+                time.sleep(timedelay)
+                #write_OGRN_Ur(row['ОГРН'],driver, delay)
+                #time.sleep(timedelay)
+                #write_OKOPF_Ur(row['КодПоОКПО'],driver, delay)
+                #time.sleep(timedelay)
 
 
-            ###################################################################################################
-            #callback(row, driver, delay)
-            #driver.set_page_load_timeout(1)
-            #try:
+                ###################################################################################################
+                #callback(row, driver, delay)
+                #driver.set_page_load_timeout(1)
+                #try:
 
-            print('Something potentially very long but which')
-            write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+                print('Something potentially very long but which')
+                write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
 
-            #copy post address
-            find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[21]/div/div[2]/div/div/div/div[1]/div/div/div[1]/div')  
+                #copy post address
+                find_and_click_element_by_path(driver, delay, '/html/body/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[21]/div/div[2]/div/div/div/div[1]/div/div/div[1]/div')  
+                
+
+
+                #except TimeoutException as ex:
+                    #isrunning = 0
+                    #print("Exception has been thrown. " + str(ex))
+                    #driver.back()
+                    #print(e)
+                    #driver.back()         
+
+                #try:
+                #write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
+                #time.sleep(timedelay)
+                #except TimeoutException as e:
+                    #print(e)
+                    #driver.back()
+                    #continue
+                
+                driver.execute_script("window.scrollTo(0, 1080)")
+                time.sleep(timedelay)
             
-
-
-            #except TimeoutException as ex:
-                #isrunning = 0
-                #print("Exception has been thrown. " + str(ex))
-                #driver.back()
-                #print(e)
-                #driver.back()         
-
-            #try:
-            #write_Post_address(row['ЭлементЗначенияПолей'],row['ЭлементПредставление'],driver, delay)
-            #time.sleep(timedelay)
-            #except TimeoutException as e:
-                #print(e)
-                #driver.back()
-                #continue
-            
-            driver.execute_script("window.scrollTo(0, 1080)")
-            time.sleep(timedelay)
+                print('before ВидКорреспондента')
+                write_Type_Ur(row['ВидКорреспондента'],driver, delay) 
+                print('ВидКорреспондента')
+                time.sleep(timedelay)
+                #write_Nerezident(row['Нерезидент'],driver, delay)
+                #time.sleep(timedelay)
+                #write_Postavchick(row['Поставщик'],driver, delay)
+                #time.sleep(timedelay)
+                #write_Pokupatel(row['Покупатель'],driver, delay)
+                #time.sleep(timedelay)
+                press_button_OK(driver, delay)
+                time.sleep(timedelay)
+        except:
+            pass
+            data = pd.read_csv("csv_write_Ur_utf8.csv", index_col ="ПолноеНаименование" )
+            data.drop(before_failed_list, inplace = True)
+            data.to_csv('csv_write_Ur_utf8.csv')
+        
+            os.execv(sys.executable, ['python3'] + ["C:/Users/Mikhail.TORZHOK-ADM/Documents/zakupki_git/csv_read.py"])
          
-
-            write_Type_Ur(row['ВидКорреспондента'],driver, delay) 
-            time.sleep(timedelay)
-            #write_Nerezident(row['Нерезидент'],driver, delay)
-            #time.sleep(timedelay)
-            #write_Postavchick(row['Поставщик'],driver, delay)
-            #time.sleep(timedelay)
-            #write_Pokupatel(row['Покупатель'],driver, delay)
-            #time.sleep(timedelay)
-            press_button_OK(driver, delay)
-            time.sleep(timedelay)
     return
 
 
